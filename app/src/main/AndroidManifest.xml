@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalOOTD">
         <activity
+            android:name=".PersonalRes"
+            android:exported="true" />
+        <activity
             android:name=".SelfAnalysisActivity"
             android:exported="true" />
         <activity
