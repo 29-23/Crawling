@@ -6,4 +6,138 @@
     android:layout_height="match_parent"
     tools:context=".PersonalRes">
 
+    <TextView
+        android:id="@+id/text_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        android:layout_margin="20dp"
+
+        android:textSize="15sp"
+        android:text="당신의 펴스널 컬러는... "
+        android:textColor="@color/black"
+        />
+
+    <ImageView
+        android:id="@+id/image_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="20dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/spring"
+        />
+
+    <TextView
+        android:id="@+id/text_inImage1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/image_1"
+        app:layout_constraintLeft_toLeftOf="@+id/image_1"
+        app:layout_constraintRight_toRightOf="@id/image_1"
+        app:layout_constraintBottom_toBottomOf="@id/image_1"
+        android:textSize="30sp"
+        android:text="봄 웜톤"/>
+    <TextView
+        android:id="@+id/text_inImage2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_inImage1"
+        app:layout_constraintLeft_toLeftOf="@+id/image_1"
+        app:layout_constraintRight_toRightOf="@id/image_1"
+        android:textSize="20sp"
+        android:text="Spring Warm"/>
+
+
+    <TextView
+        android:id="@+id/text_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="20dp"
+
+        app:layout_constraintTop_toBottomOf="@id/image_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:text="봄 웜톤은 밝고 생기있는 이미지의 퍼스널컬러입니다. \n명도가 높고 따뜻한 색이 가장 잘어울리며, 채도가 높은 색상이 잘 어울리면 브라이트, 채도가 낮은 색상이 잘 어울리면 라이트 톤으로 분류됩니다."
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/text_bestColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/text_explain"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        android:text="베스트 컬러"
+        android:textColor="@color/black"
+        />
+
+    <ImageView
+
+        android:id="@+id/image_bestColor"
+        android:layout_width="400dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/text_bestColor"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/spring_best"
+        />
+
+
+    <TextView
+        android:id="@+id/text_worstColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/image_bestColor"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="워스트 컬러"
+        android:textColor="@color/black"
+        />
+
+    <ImageView
+        android:id="@+id/image_worstColor"
+        android:layout_width="400dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/text_worstColor"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/spring_worst"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@id/image_worstColor"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="퍼스널 OOTD 시작!"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_reAnalysis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_start"
+        app:layout_constraintLeft_toLeftOf="@id/btn_start"
+        app:layout_constraintRight_toRightOf="@id/btn_start"
+        android:text="다시 진단하기"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
