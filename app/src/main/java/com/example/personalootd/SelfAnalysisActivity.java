@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -16,6 +18,7 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 import android.view.TextureView;
@@ -59,6 +62,9 @@ public class SelfAnalysisActivity extends AppCompatActivity {
     private Button colorBtn1;     // 1번 색상 버튼
     private Button colorBtn2;     // 2번 색상 버튼
     private Button selectionBtn;  // 색상 선택 버튼
+
+    int color1;  // 1번 버튼 색상 값
+    int color2;  // 2번 버튼 색상 값
     int cnt = 0; // 질문 개수 count
 
     // 액티비티 생명주기
@@ -67,22 +73,27 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_analysis);
 
+        background = findViewById(R.id.background);
+        colorBtn1 = findViewById(R.id.colorBtn1);
+        colorBtn2 = findViewById(R.id.colorBtn2);
+        selectionBtn = findViewById(R.id.selectionBtn);
+
         // db
-        /*DBHelper helper;
+        DBHelper helper;
         SQLiteDatabase db;
         helper = new DBHelper(SelfAnalysisActivity.this, "OOTD.db", null, 1);
         db = helper.getWritableDatabase();
         helper.onCreate(db);
         Cursor cursor = db.query("QUESTION",null,null,null,null,null,null,null);
         if (cursor != null) {
-            while (cursor.moveToNext()) {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-                String first = cursor.getString(cursor.getColumnIndexOrThrow("first"));
-                String second = cursor.getString(cursor.getColumnIndexOrThrow("second"));
-
-                Log.d("aa", "id: " + id + ", first: " + first + ", second: " + second );
-            }
-        }*/
+            cursor.moveToFirst();
+            color1 = Integer.decode("0x"+cursor.getString(1));
+            color2 = Integer.decode("0x"+cursor.getString(2));
+            //colorBtn1.setBackgroundColor(color1);
+            colorBtn1.setBackgroundColor(0xFF000000+color1);
+            colorBtn2.setBackgroundColor(0xFF000000+color2);
+            background.setBackgroundColor(0xFF000000+color1);
+        }else Log.d("aa", "Cursor is NULL");
 
 
         // camera
@@ -93,34 +104,30 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
-
-        background = findViewById(R.id.background);
-        colorBtn1 = findViewById(R.id.colorBtn1);
-        colorBtn2 = findViewById(R.id.colorBtn2);
-        selectionBtn = findViewById(R.id.selectionBtn);
-
         colorBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                background.setBackgroundColor(0xFF000000+color1);
             }
         });
 
         colorBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                background.setBackgroundColor(0xFF000000+color2);
             }
         });
 
         selectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cursor.moveToNext();
                 cnt++;
-                /*cursor.moveToNext();
-                Toast.makeText(getApplicationContext(),cursor.getInt(1), Toast.LENGTH_SHORT).show();
-                colorBtn1.setBackgroundColor(cursor.getInt(1));
-                colorBtn2.setBackgroundColor(cursor.getInt(2));*/
+                color1 = Integer.decode("0x"+cursor.getString(1));
+                color2 = Integer.decode("0x"+cursor.getString(2));
+                colorBtn1.setBackgroundColor(0xFF000000+color1);
+                colorBtn2.setBackgroundColor(0xFF000000+color2);
+                background.setBackgroundColor(0xFF000000+color1);
 
                 if (cnt > 3){
                     Intent intent = new Intent(SelfAnalysisActivity.this,PersonalRes.class);

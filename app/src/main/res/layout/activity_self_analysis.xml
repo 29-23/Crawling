@@ -28,18 +28,24 @@
 
     </com.example.personalootd.RoundedFrameLayout>
 
-    <TextView
+    <Button
         android:id="@+id/selInfo_t"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="@string/selfAnalysis_sel_info"
+        android:textColor="#ffffff"
+        android:backgroundTint="#535353"
+
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintVertical_bias="0.65"/>
+        app:layout_constraintVertical_bias="0.65"
+        />
+
 
     <Button
         android:id="@+id/colorBtn1"
@@ -61,6 +67,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
 
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -77,6 +84,7 @@
         android:layout_height="60dp"
 
         android:text="@string/selfAnalysis_selection"
+        android:backgroundTint="#535353"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
