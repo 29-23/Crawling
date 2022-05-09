@@ -1,7 +1,5 @@
 package com.example.personalootd;
 
-import static android.graphics.Path.Direction.CCW;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Path;
@@ -26,7 +24,7 @@ public class RoundedFrameLayout extends FrameLayout {
         float h = getHeight();
         mPath.reset();
         mRect.set(0, 0, w, h);
-        mPath.addRoundRect(mRect, mRadius, mRadius, CCW);
+        mPath.addRoundRect(mRect, mRadius, mRadius, Path.Direction.CCW);
         mPath.close();
         boolean debug = canvas.clipPath(mPath);
         super.onDraw(canvas);

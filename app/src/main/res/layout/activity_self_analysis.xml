@@ -3,26 +3,88 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFEB3B"
     >
 
     <com.example.personalootd.RoundedFrameLayout
         android:id="@+id/roundFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/selInfo_t"
+        >
 
         <com.example.personalootd.AutoFitTextureView
-            android:id="@+id/textureView"
+            android:id="@+id/roundTextureView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </com.example.personalootd.RoundedFrameLayout>
 
+    <TextView
+        android:id="@+id/selInfo_t"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/selfAnalysis_sel_info"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintVertical_bias="0.65"/>
+
+    <Button
+        android:id="@+id/colorBtn1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintVertical_bias="0.8"
+
+        />
+
+    <Button
+        android:id="@+id/colorBtn2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintVertical_bias="0.8"
+
+        />
+
+    <Button
+        android:id="@+id/selectionBtn"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+
+        android:text="@string/selfAnalysis_selection"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintVertical_bias="0.92"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.personalootd;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -12,35 +13,32 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.media.ImageReader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Size;
-import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.io.File;
 import java.util.Arrays;
 
 public class SelfAnalysisActivity extends AppCompatActivity {
 
     // 권한 관련 변수 값
     private int REQUEST_CODE_PERMISSIONS = 1001;
-    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA"};
+    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA","android.permission.READ_EXTERNAL_STORAGE" };
 
     // 뷰 객체
     private TextureView textureView;
-
-    // 화면 각도 상수
-    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
 
     // 카메라2 변수 공간
@@ -52,10 +50,16 @@ public class SelfAnalysisActivity extends AppCompatActivity {
 
     // 이미지 저장 변수 공간
     private Size imageDimensions;
-    private ImageReader imageReader;
-    private File file;
+
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+
+    // 액티비티 요소
+    private ConstraintLayout background;
+    private Button colorBtn1;     // 1번 색상 버튼
+    private Button colorBtn2;     // 2번 색상 버튼
+    private Button selectionBtn;  // 색상 선택 버튼
+    int cnt = 0; // 질문 개수 count
 
     // 액티비티 생명주기
     @Override
@@ -63,13 +67,69 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_analysis);
 
-        textureView = (TextureView) findViewById(R.id.textureView);
+        // db
+        /*DBHelper helper;
+        SQLiteDatabase db;
+        helper = new DBHelper(SelfAnalysisActivity.this, "OOTD.db", null, 1);
+        db = helper.getWritableDatabase();
+        helper.onCreate(db);
+        Cursor cursor = db.query("QUESTION",null,null,null,null,null,null,null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String first = cursor.getString(cursor.getColumnIndexOrThrow("first"));
+                String second = cursor.getString(cursor.getColumnIndexOrThrow("second"));
+
+                Log.d("aa", "id: " + id + ", first: " + first + ", second: " + second );
+            }
+        }*/
+
+
+        // camera
+        textureView = (TextureView) findViewById(R.id.roundTextureView);
 
         if (allPermissionsGranted()) {
             startCamera(); //start camera if permission has been granted by user
         } else {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
+
+        background = findViewById(R.id.background);
+        colorBtn1 = findViewById(R.id.colorBtn1);
+        colorBtn2 = findViewById(R.id.colorBtn2);
+        selectionBtn = findViewById(R.id.selectionBtn);
+
+        colorBtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        colorBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        selectionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cnt++;
+                /*cursor.moveToNext();
+                Toast.makeText(getApplicationContext(),cursor.getInt(1), Toast.LENGTH_SHORT).show();
+                colorBtn1.setBackgroundColor(cursor.getInt(1));
+                colorBtn2.setBackgroundColor(cursor.getInt(2));*/
+
+                if (cnt > 3){
+                    Intent intent = new Intent(SelfAnalysisActivity.this,PersonalRes.class);
+                    startActivity(intent); //액티비티 이동
+                }
+            }
+        });
+
+
     }
 
     @Override
