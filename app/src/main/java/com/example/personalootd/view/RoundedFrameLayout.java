@@ -1,4 +1,4 @@
-package com.example.personalootd;
+package com.example.personalootd.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -10,7 +10,7 @@
     android:background="#FFEB3B"
     >
 
-    <com.example.personalootd.RoundedFrameLayout
+    <com.example.personalootd.view.RoundedFrameLayout
         android:id="@+id/roundFrameLayout"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
@@ -21,12 +21,12 @@
         app:layout_constraintBottom_toBottomOf="@id/selInfo_t"
         >
 
-        <com.example.personalootd.AutoFitTextureView
+        <com.example.personalootd.view.AutoFitTextureView
             android:id="@+id/roundTextureView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.example.personalootd.RoundedFrameLayout>
+    </com.example.personalootd.view.RoundedFrameLayout>
 
     <Button
         android:id="@+id/selInfo_t"

@@ -1,4 +1,4 @@
-package com.example.personalootd;
+package com.example.personalootd.view.activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -31,6 +31,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.personalootd.R;
+import com.example.personalootd.data.DBHelper;
 
 import java.util.Arrays;
 
@@ -77,6 +80,7 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         colorBtn1 = findViewById(R.id.colorBtn1);
         colorBtn2 = findViewById(R.id.colorBtn2);
         selectionBtn = findViewById(R.id.selectionBtn);
+        textureView = (TextureView) findViewById(R.id.roundTextureView);
 
         // db
         DBHelper helper;
@@ -89,7 +93,6 @@ public class SelfAnalysisActivity extends AppCompatActivity {
             cursor.moveToFirst();
             color1 = Integer.decode("0x"+cursor.getString(1));
             color2 = Integer.decode("0x"+cursor.getString(2));
-            //colorBtn1.setBackgroundColor(color1);
             colorBtn1.setBackgroundColor(0xFF000000+color1);
             colorBtn2.setBackgroundColor(0xFF000000+color2);
             background.setBackgroundColor(0xFF000000+color1);
@@ -97,13 +100,14 @@ public class SelfAnalysisActivity extends AppCompatActivity {
 
 
         // camera
-        textureView = (TextureView) findViewById(R.id.roundTextureView);
 
         if (allPermissionsGranted()) {
             startCamera(); //start camera if permission has been granted by user
         } else {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
+
+
         colorBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,18 +125,23 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         selectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cursor.moveToNext();
                 cnt++;
-                color1 = Integer.decode("0x"+cursor.getString(1));
-                color2 = Integer.decode("0x"+cursor.getString(2));
-                colorBtn1.setBackgroundColor(0xFF000000+color1);
-                colorBtn2.setBackgroundColor(0xFF000000+color2);
-                background.setBackgroundColor(0xFF000000+color1);
-
-                if (cnt > 3){
-                    Intent intent = new Intent(SelfAnalysisActivity.this,PersonalRes.class);
+                if (cnt > 2){ //질문 개수 -1
+                    Intent intent = new Intent(SelfAnalysisActivity.this, PersonalResActivity.class);
                     startActivity(intent); //액티비티 이동
+                }else{
+                    if (cursor!= null && cursor.getCount() > 0){
+                        cursor.moveToNext();
+                        color1 = Integer.decode("0x"+cursor.getString(1));
+                        color2 = Integer.decode("0x"+cursor.getString(2));
+                        colorBtn1.setBackgroundColor(0xFF000000+color1);
+                        colorBtn2.setBackgroundColor(0xFF000000+color2);
+                        background.setBackgroundColor(0xFF000000+color1);
+                    }
                 }
+
+
+
             }
         });
 

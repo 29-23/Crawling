@@ -1,4 +1,4 @@
-package com.example.personalootd;
+package com.example.personalootd.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PersonalRes extends AppCompatActivity {
+import com.example.personalootd.R;
+
+public class PersonalResActivity extends AppCompatActivity {
 
 
     private Button btn_start; // 퍼스널 ootd 시작
@@ -25,7 +27,7 @@ public class PersonalRes extends AppCompatActivity {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PersonalRes.this, MainActivity.class);
+                Intent intent = new Intent(PersonalResActivity.this, MainActivity.class);
                 startActivity(intent);
 
             }
@@ -35,7 +37,7 @@ public class PersonalRes extends AppCompatActivity {
         btn_reAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PersonalRes.this, SelfAnalysisActivity.class);
+                Intent intent = new Intent(PersonalResActivity.this, SelfAnalysisActivity.class);
                 startActivity(intent);
             }
         });

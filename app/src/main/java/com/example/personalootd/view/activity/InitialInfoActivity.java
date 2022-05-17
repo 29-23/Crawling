@@ -1,4 +1,4 @@
-package com.example.personalootd;
+package com.example.personalootd.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class InitialInfo extends AppCompatActivity {
+import com.example.personalootd.R;
+
+public class InitialInfoActivity extends AppCompatActivity {
 
     private Button btn_move; // 다음
 
@@ -22,7 +24,7 @@ public class InitialInfo extends AppCompatActivity {
         btn_move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(InitialInfo.this, SelfAnalysisActivity.class);
+                Intent intent = new Intent(InitialInfoActivity.this, SelfAnalysisActivity.class);
                 startActivity(intent); //액티비티 이동
 
             }
