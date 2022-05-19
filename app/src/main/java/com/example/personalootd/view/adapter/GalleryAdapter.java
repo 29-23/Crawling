@@ -124,11 +124,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
         }
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            int preposition = -1;
+
             @Override
             public void onClick(View v) {
 
                 if (onItemClickListener != null) {
-                    //onItemClickListener.OnItemClick(viewHolder, position);
+                    onItemClickListener.OnItemClick(viewHolder, position, preposition);
+                    preposition = viewHolder.getAbsoluteAdapterPosition();
                 }
             }
         });

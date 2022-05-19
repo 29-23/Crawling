@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,9 +28,7 @@ public class GalleryManager {
 
         ArrayList<PhotoVO> photoList = new ArrayList<>();
 
-        //uri가 이상해
         Uri uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        Log.v("aa", uri +"");
 
         String[] projection = {
                 MediaStore.MediaColumns.DATA,
@@ -44,6 +41,7 @@ public class GalleryManager {
 
         while (cursor.moveToNext()) {
 
+            // photoVO에 imgPath 주는데 그거말고 URI 넘겨서 imageView setting 해야함
             PhotoVO photoVO = new PhotoVO(cursor.getString(columnIndexData),false);
             photoList.add(photoVO);
         }

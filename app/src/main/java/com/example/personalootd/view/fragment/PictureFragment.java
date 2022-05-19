@@ -2,6 +2,7 @@ package com.example.personalootd.view.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -36,7 +37,6 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     private RecyclerView recyclerGallery;
     private GalleryAdapter galleryAdapter;
 
-    private ImageView goBtn;
     private ImageView camBtn;
 
     private static final int REQUEST_CAMERA = 100;
@@ -57,7 +57,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_picture, container, false);
-        //goBtn = view.findViewById(R.id.go_btn);
+
         camBtn = view.findViewById(R.id.cameraIcon);
 
         camBtn.setOnClickListener(this);
@@ -106,7 +106,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
 
         List<PhotoVO> selectedPhotoList = galleryAdapter.getSelectedPhotoList();
         for (int i = 0; i < selectedPhotoList.size(); i++) {
-            Log.i("", ">>> selectedPhotoList   :  " + selectedPhotoList.get(i).getImgPath());
+            Log.i("", ">>> selectedList   :  " + selectedPhotoList.get(i).getImgPath());
         }
     }
 
@@ -131,14 +131,29 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
 
         @Override
-        public void OnItemClick(GalleryAdapter.PhotoViewHolder photoViewHolder, int position) {
+        public void OnItemClick(GalleryAdapter.PhotoViewHolder photoViewHolder, int position, int preposition) {
 
             PhotoVO photoVO = galleryAdapter.getmPhotoList().get(position);
 
             if(photoVO.isSelected()){
                 photoVO.setSelected(false);
+                ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(null);
+
             }else{
                 photoVO.setSelected(true);
+                galleryAdapter.getmPhotoList().set(position,photoVO);
+
+                Bitmap bm = BitmapFactory.decodeFile(photoVO.getImgPath());
+                ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(bm);
+
+                // 다른 아이템 선택 해제
+                // 아직 안됨...
+                Log.d("aa", "Preposition : " + preposition);
+                if (preposition > 0 ){
+                    photoVO = galleryAdapter.getmPhotoList().get(preposition);
+                    photoVO.setSelected(false);
+                }
+
             }
 
             galleryAdapter.getmPhotoList().set(position,photoVO);
@@ -157,9 +172,6 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
                 callCamera();
                 break;
             }
-            case R.id.go_btn:
-                // go to Pairing Fragment
-                break;
 
         }
     }

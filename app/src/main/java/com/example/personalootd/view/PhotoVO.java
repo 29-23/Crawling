@@ -25,4 +25,5 @@ public class PhotoVO {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
+
 }
