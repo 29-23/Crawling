@@ -7,160 +7,218 @@
     android:background="#ffffffff"
     tools:context=".view.fragment.PairingFragment">
 
-    <ImageView
-        android:id="@+id/recommend_cloth"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent=".6"
-        app:layout_constraintHeight_percent=".4"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
 
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-        android:id="@+id/recommend_text"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:textSize="24sp"
-
-        app:layout_constraintTop_toBottomOf="@id/recommend_cloth"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/season_percentage_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        app:layout_constraintHeight_percent=".2"
-
-        app:layout_constraintTop_toBottomOf="@id/recommend_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:layout_marginBottom="8dp"
         >
 
-        <LinearLayout
-            android:id="@+id/season_text_layout"
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="32dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:scaleType="fitStart"
+            android:src="@drawable/back"
 
-            app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/spring"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/summer"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/autumn"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/winter"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/season_percentage_text_layout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/season_text_layout"
-            >
-
-            <TextView
-                android:id="@+id/spring_percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/summer_percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/autumn_percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/winter_percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/season_percentage_text_layout"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <ProgressBar
-                android:id="@+id/spring_progressbar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:progressTint="@color/springMainColor"/>
-
-            <ProgressBar
-                android:id="@+id/summer_progressbar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:progressTint="@color/summerMainColor"/>
-
-            <ProgressBar
-                android:id="@+id/autumn_progressbar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:progressTint="@color/autumnMainColor"/>
-
-            <ProgressBar
-                android:id="@+id/winter_progressbar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:progressTint="@color/winterMainColor"/>
-
-
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/titleBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/cloth_img"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".6"
+            app:layout_constraintHeight_percent=".4"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/recommend_text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:textSize="24sp"
+
+            app:layout_constraintTop_toBottomOf="@id/cloth_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/season_percentage_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            app:layout_constraintHeight_percent=".25"
+
+            app:layout_constraintTop_toBottomOf="@id/recommend_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <LinearLayout
+                android:id="@+id/spring_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.25"
+                android:orientation="horizontal"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/spring"/>
+
+                <TextView
+                    android:id="@+id/spring_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"/>
+
+                <ProgressBar
+                    android:id="@+id/spring_progressbar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progressTint="@color/springMainColor"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/summer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.25"
+                android:orientation="horizontal"
+
+                app:layout_constraintTop_toBottomOf="@id/spring_layout"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/summer"/>
+
+                <TextView
+                    android:id="@+id/summer_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"/>
+
+                <ProgressBar
+                    android:id="@+id/summer_progressbar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progressTint="@color/summerMainColor"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/autumn_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.25"
+                android:orientation="horizontal"
+
+                app:layout_constraintTop_toBottomOf="@id/summer_layout"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/autumn"/>
+
+                <TextView
+                    android:id="@+id/autumn_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"/>
+
+                <ProgressBar
+                    android:id="@+id/autumn_progressbar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progressTint="@color/autumnMainColor"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/winter_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.25"
+                android:orientation="horizontal"
+
+                app:layout_constraintTop_toBottomOf="@id/autumn_layout"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/winter"/>
+
+                <TextView
+                    android:id="@+id/winter_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"/>
+
+                <ProgressBar
+                    android:id="@+id/winter_progressbar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progressTint="@color/winterMainColor" />
+
+            </LinearLayout>
 
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recommend_cloths_recyclerview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent=".35"
+
+            app:layout_constraintTop_toBottomOf="@id/season_percentage_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

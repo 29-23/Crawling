@@ -1,13 +1,12 @@
 package com.example.personalootd.view.activity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.personalootd.R;
 import com.example.personalootd.view.fragment.HomeFragment;
@@ -19,18 +18,16 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    HomeFragment homeFragment;
-    PictureFragment pictureFragment;
-    SettingsFragment settingsFragment;
-    PairingFragment pairingFragment;
+    private HomeFragment homeFragment;
+    private PictureFragment pictureFragment;
+    private SettingsFragment settingsFragment;
+    private PairingFragment pairingFragment;
 
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
 
-    ImageView backBtn;
-    ImageView logo;
-    ImageView goBtn;
-
-    FragmentTransaction transaction;
+    // Picture, Pairing Fragment에 사용될 이미지
+    // bitmap인데 filepath나 uri가 편하면 그쪽으로 변수 바꿀게용
+    public Bitmap bm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigationBar);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
-        backBtn = (ImageView) findViewById(R.id.back_btn);
-        logo = (ImageView) findViewById(R.id.logo);
-        goBtn = (ImageView) findViewById(R.id.go_btn);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
 
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationBar);
@@ -56,18 +49,15 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.home:
-                        goBtn.setVisibility(View.GONE);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, homeFragment).commit();
                         return true;
                     case R.id.pic:
-                        goBtn.setVisibility(View.VISIBLE);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, pictureFragment).commit();
 
                         return true;
                     case R.id.settings:
-                        goBtn.setVisibility(View.GONE);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, settingsFragment).commit();
                         return true;
@@ -76,36 +66,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (pairingFragment!=null){
-                    getSupportFragmentManager().beginTransaction()
-                            .remove(pairingFragment)
-                            .commit();
-                }
-
-            }
-        });
-
-        goBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomNavigationView.setVisibility(View.GONE);
-                backBtn.setVisibility(View.VISIBLE);
-                logo.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, pairingFragment)
-                        .addToBackStack(null)
-                        .commit();
-
-            }
-        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+    }
+
+    public void goBack() {
+        if (pairingFragment!=null){
+            getSupportFragmentManager().beginTransaction()
+                    .remove(pairingFragment)
+                    .commit();
+        }
+    }
+
+    public void goPairingFr(){
+        bottomNavigationView.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, pairingFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void goPictureFr(){
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        if (pairingFragment!=null){
+            getSupportFragmentManager().beginTransaction()
+                    .remove(pairingFragment)
+                    .commit();
+        }
 
     }
 

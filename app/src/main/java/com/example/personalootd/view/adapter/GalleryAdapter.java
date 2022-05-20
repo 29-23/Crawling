@@ -2,6 +2,7 @@ package com.example.personalootd.view.adapter;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,7 +107,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
      * @param position
      */
     @Override
-    public void onBindViewHolder(final PhotoViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final PhotoViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
 
         final PhotoVO photoVO = mPhotoList.get(position);
 
@@ -123,6 +124,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
             viewHolder.layoutSelect.setVisibility(View.INVISIBLE);
         }
 
+
+        // 이거 PhotoViewHolder로 옮겨야 함
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             int preposition = -1;
 
@@ -135,7 +138,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
                 }
             }
         });
-
     }
 
 

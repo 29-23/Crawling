@@ -1,15 +1,16 @@
 package com.example.personalootd.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,18 +32,32 @@ import java.util.List;
 // 상의/하의 사진 촬영 또는 갤러리에서 이미지 선택
 public class PictureFragment extends Fragment implements View.OnClickListener{
 
+    MainActivity mainActivity;
+
     private static final int REQUEST_IMAGE_CAPTURE = 100;
-    MainActivity mContext = (MainActivity) getActivity() ;
     private GalleryManager mGalleryManager;
     private RecyclerView recyclerGallery;
     private GalleryAdapter galleryAdapter;
 
+    private ImageView goBtn;
     private ImageView camBtn;
 
     private static final int REQUEST_CAMERA = 100;
 
     public PictureFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mainActivity =(MainActivity)getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mainActivity =null;
     }
 
     @Override
@@ -58,9 +73,12 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
 
         View view = inflater.inflate(R.layout.fragment_picture, container, false);
 
-        camBtn = view.findViewById(R.id.cameraIcon);
+        camBtn = (ImageView) view.findViewById(R.id.cameraIcon);
+        goBtn = (ImageView) view.findViewById(R.id.go_btn);
 
+        // 버튼 클릭 리스너
         camBtn.setOnClickListener(this);
+        goBtn.setOnClickListener(this);
 
         return view;
     }
@@ -76,16 +94,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        /*
-        getActivity().runOnUiThread(new Runnable() {
 
-
-            @Override
-            public void run() {
-
-            }
-        });
-        */
     }
 
 
@@ -106,7 +115,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
 
         List<PhotoVO> selectedPhotoList = galleryAdapter.getSelectedPhotoList();
         for (int i = 0; i < selectedPhotoList.size(); i++) {
-            Log.i("", ">>> selectedList   :  " + selectedPhotoList.get(i).getImgPath());
+            // Log.i("", ">>> selectedList   :  " + selectedPhotoList.get(i).getImgPath());
         }
     }
 
@@ -145,10 +154,14 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
 
                 Bitmap bm = BitmapFactory.decodeFile(photoVO.getImgPath());
                 ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(bm);
+                //Log.d("aa", "bitmap in pic : "+ bm);
 
-                // 다른 아이템 선택 해제
-                // 아직 안됨...
-                Log.d("aa", "Preposition : " + preposition);
+                mainActivity.bm = bm;
+
+                // 원래 아이템 하나만 선택되는거고
+                // 다른 아이템 선택하면 기존 선택 해제돼야하는데
+                // 아직 구현 안됨... ㅎㅎㅎㅎㅎㅎ
+                //Log.d("aa", "Preposition : " + preposition);
                 if (preposition > 0 ){
                     photoVO = galleryAdapter.getmPhotoList().get(preposition);
                     photoVO.setSelected(false);
@@ -171,6 +184,12 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
                 // camera 켜고 사진 촬영
                 callCamera();
                 break;
+            }
+            case R.id.go_btn:
+            {
+                Toast.makeText(getActivity(), "go button clicked", Toast.LENGTH_SHORT).show();
+                mainActivity.goPairingFr();
+
             }
 
         }
