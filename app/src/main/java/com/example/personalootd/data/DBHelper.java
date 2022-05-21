@@ -68,8 +68,10 @@ public class DBHelper extends SQLiteOpenHelper {
         // 자가진단 질문지
         String sql = "CREATE TABLE if not exists QUESTION ("
                 + "_id integer primary key autoincrement,"
-                + "first integer,"
-                + "second integer);";
+                + "color integer,"  // color code
+                + "tem integer,"    // 색 온도 (temperature)
+                + "bri integer,"    // 색 명도 (brightness)
+                + "sat integer)";   // 색 채도 (saturation)
 
         db.execSQL(sql);
     }

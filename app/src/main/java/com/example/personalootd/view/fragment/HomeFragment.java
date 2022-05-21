@@ -107,4 +107,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
 
     }
+
+
 }

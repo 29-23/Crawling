@@ -3,10 +3,12 @@ package com.example.personalootd.view.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.SurfaceTexture;
+import android.graphics.drawable.Drawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -66,11 +68,15 @@ public class SelfAnalysisActivity extends AppCompatActivity {
     private Button colorBtn2;     // 2번 색상 버튼
     private Button selectionBtn;  // 색상 선택 버튼
 
-    int color1;  // 1번 버튼 색상 값
-    int color2;  // 2번 버튼 색상 값
+    int [] color1 = new int [4];  // 1번 버튼 색상 값 : 색상코드, 온도, 명도, 채도
+    int [] color2 = new int [4];  // 2번 버튼 색상 값
     int cnt = 0; // 질문 개수 count
+    int tem=0, bri=0, sat=0, con=0;      // 온도(temperature), 명도(brightness), 채도(saturation), 대비 (contrast)
+    int selectedBtnNum = 1;       // 현재 선택된 버튼
 
-    // 액티비티 생명주기
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +88,11 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         selectionBtn = findViewById(R.id.selectionBtn);
         textureView = (TextureView) findViewById(R.id.roundTextureView);
 
+        preferences = getSharedPreferences( "UserInfo" , MODE_PRIVATE);
+        editor = preferences.edit();
+
+
+
         // db
         DBHelper helper;
         SQLiteDatabase db;
@@ -91,16 +102,24 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         Cursor cursor = db.query("QUESTION",null,null,null,null,null,null,null);
         if (cursor != null) {
             cursor.moveToFirst();
-            color1 = Integer.decode("0x"+cursor.getString(1));
-            color2 = Integer.decode("0x"+cursor.getString(2));
-            colorBtn1.setBackgroundColor(0xFF000000+color1);
-            colorBtn2.setBackgroundColor(0xFF000000+color2);
-            background.setBackgroundColor(0xFF000000+color1);
+            color1[0] = Integer.decode("0x"+cursor.getString(1));
+            color1[1] = cursor.getInt(2);
+            color1[2] = cursor.getInt(3);
+            color1[3] = cursor.getInt(4);
+
+            cursor.moveToNext();
+            color2[0] = Integer.decode("0x"+cursor.getString(1));
+            color2[1] = cursor.getInt(2);
+            color2[2] = cursor.getInt(3);
+            color2[3] = cursor.getInt(4);
+
+            colorBtn1.setBackgroundColor(0xFF000000+color1[0]);
+            colorBtn2.setBackgroundColor(0xFF000000+color2[0]);
+            background.setBackgroundColor(0xFF000000+color1[0]);
         }else Log.d("aa", "Cursor is NULL");
 
 
         // camera
-
         if (allPermissionsGranted()) {
             startCamera(); //start camera if permission has been granted by user
         } else {
@@ -111,40 +130,98 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         colorBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                background.setBackgroundColor(0xFF000000+color1);
+                selectedBtnNum = 1;
+                if (cnt > 10){
+                    Drawable drawable = getResources().getDrawable(R.drawable.winnter_stripe);
+                    background.setBackground(drawable);
+                    con = 1;
+                }else background.setBackgroundColor(0xFF000000+color1[0]);
             }
         });
 
         colorBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                background.setBackgroundColor(0xFF000000+color2);
+                selectedBtnNum = 2;
+                if (cnt > 10){
+                    Drawable drawable = getResources().getDrawable(R.drawable.summer_stripe);
+                    background.setBackground(drawable);
+                    con = -1;
+                }else background.setBackgroundColor(0xFF000000+color2[0]);
             }
         });
 
         selectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // 점수 계산
                 cnt++;
-                if (cnt > 2){ //질문 개수 -1
+
+                if (cnt > 11){
+                    if (tem > 0){ // 웜톤
+                        if (bri > 0){ // 봄
+                            editor.putString("userColor", "spring");
+                        }else { // 가을
+                            editor.putString("userColor", "autumn");
+                        }
+                    }else{ // 쿨톤
+                        if (con > 0){ // 겨울
+                            editor.putString("userColor", "winter");
+                        }else{ // 여름
+                            editor.putString("userColor", "summer");
+                        }
+                    }
+                    editor.commit();
+
+
                     Intent intent = new Intent(SelfAnalysisActivity.this, PersonalResActivity.class);
                     startActivity(intent); //액티비티 이동
-                }else{
-                    if (cursor!= null && cursor.getCount() > 0){
-                        cursor.moveToNext();
-                        color1 = Integer.decode("0x"+cursor.getString(1));
-                        color2 = Integer.decode("0x"+cursor.getString(2));
-                        colorBtn1.setBackgroundColor(0xFF000000+color1);
-                        colorBtn2.setBackgroundColor(0xFF000000+color2);
-                        background.setBackgroundColor(0xFF000000+color1);
-                    }
                 }
 
+                calScore(selectedBtnNum);
+                if(cnt <= 10) {
+                    if (cursor != null && cursor.getCount() > 0) {
+                        cursor.moveToNext();
+                        color1[0] = Integer.decode("0x" + cursor.getString(1));
+                        color1[1] = cursor.getInt(2);
+                        color1[2] = cursor.getInt(3);
+                        color1[3] = cursor.getInt(4);
 
+                        cursor.moveToNext();
+                        color2[0] = Integer.decode("0x" + cursor.getString(1));
+                        color2[1] = cursor.getInt(2);
+                        color2[2] = cursor.getInt(3);
+                        color2[3] = cursor.getInt(4);
 
+                        colorBtn1.setBackgroundColor(0xFF000000 + color1[0]);
+                        colorBtn2.setBackgroundColor(0xFF000000 + color2[0]);
+                        background.setBackgroundColor(0xFF000000 + color1[0]);
+                    }
+                }else {
+                    colorBtn1.setBackgroundColor(0xFF444444);
+                    colorBtn2.setBackgroundColor(0xFFff0748);
+                    Drawable drawable = getResources().getDrawable(R.drawable.winnter_stripe);
+                    background.setBackground(drawable);
+
+                }
             }
         });
 
+
+    }
+
+    private void calScore(int selectedBtnNum) {
+
+        if (selectedBtnNum == 1){
+            if (color1[1] != color2[1]) tem+=color1[1];
+            if (color1[2] != color2[2]) bri+=color1[2];
+            if (color1[3] != color2[3]) sat+=color1[3];
+        }else{
+            if (color1[1] != color2[1]) tem+=color2[1];
+            if (color1[2] != color2[2]) bri+=color2[2];
+            if (color1[3] != color2[3]) sat+=color2[3];
+        }
 
     }
 

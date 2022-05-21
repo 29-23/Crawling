@@ -28,5 +28,7 @@
     <string name="summer">여름</string>
     <string name="autumn">가을</string>
     <string name="winter">겨울</string>
+    <string name="spring_exp"> 봄 웜톤은 밝고 생기있는 이미지의 퍼스널컬러입니다. \n명도가 높고 따뜻한 색이 가장 잘어울리며,
+        채도가 높은 색상이 잘 어울리면 브라이트, 채도가 낮은 색상이 잘 어울리면 라이트 톤으로 분류됩니다.</string>
 
 </resources>
