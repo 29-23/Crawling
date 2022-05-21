@@ -24,9 +24,9 @@ public class GalleryManager {
      *
      * @return
      */
-    public List<PhotoVO> getAllPhotoPathList() {
+    public List<GalleryItem> getAllPhotoPathList() {
 
-        ArrayList<PhotoVO> photoList = new ArrayList<>();
+        ArrayList<GalleryItem> photoList = new ArrayList<>();
 
         Uri uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
@@ -42,8 +42,8 @@ public class GalleryManager {
         while (cursor.moveToNext()) {
 
             // photoVO에 imgPath 주는데 그거말고 URI 넘겨서 imageView setting 해야함
-            PhotoVO photoVO = new PhotoVO(cursor.getString(columnIndexData),false);
-            photoList.add(photoVO);
+            GalleryItem galleryItem = new GalleryItem(cursor.getString(columnIndexData),false);
+            photoList.add(galleryItem);
         }
 
         cursor.close();
@@ -57,7 +57,7 @@ public class GalleryManager {
      *
      * @return
      */
-    public List<PhotoVO> getDatePhotoPathList(int year, int month, int day) {
+    public List<GalleryItem> getDatePhotoPathList(int year, int month, int day) {
 
         Calendar startCalendar = Calendar.getInstance();
         startCalendar.set(year, month, day, 0, 0);
@@ -68,7 +68,7 @@ public class GalleryManager {
         String startTitme = String.valueOf(startCalendar.getTimeInMillis()).substring(0, 10);
         String endTitme = String.valueOf(endCalendar.getTimeInMillis()).substring(0, 10);
 
-        ArrayList<PhotoVO> photoList = new ArrayList<>();
+        ArrayList<GalleryItem> photoList = new ArrayList<>();
 
         Uri uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
@@ -87,8 +87,8 @@ public class GalleryManager {
 
         while (cursor.moveToNext()) {
 
-            PhotoVO photoVO = new PhotoVO(cursor.getString(columnIndexData),false);
-            photoList.add(photoVO);
+            GalleryItem galleryItem = new GalleryItem(cursor.getString(columnIndexData),false);
+            photoList.add(galleryItem);
         }
         cursor.close();
         return photoList;

@@ -13,9 +13,9 @@ import android.widget.RelativeLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.personalootd.OnItemClickListener;
+import com.example.personalootd.OnGalleryClickListener;
 import com.example.personalootd.R;
-import com.example.personalootd.view.PhotoVO;
+import com.example.personalootd.view.GalleryItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +26,16 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
     private Activity mActivity;
 
     private int itemLayout;
-    private List<PhotoVO> mPhotoList;
+    private List<GalleryItem> mPhotoList;
 
-    private OnItemClickListener onItemClickListener;
+    private OnGalleryClickListener onGalleryClickListener;
 
 
     /**
      * PhotoList 반환
      * @return
      */
-    public List<PhotoVO> getmPhotoList() {
+    public List<GalleryItem> getmPhotoList() {
         return mPhotoList;
     }
 
@@ -44,15 +44,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
      * 선택된 PhotoList 반환
      * @return
      */
-    public List<PhotoVO> getSelectedPhotoList(){
+    public List<GalleryItem> getSelectedPhotoList(){
 
-        List<PhotoVO> mSelectPhotoList = new ArrayList<>();
+        List<GalleryItem> mSelectPhotoList = new ArrayList<>();
 
         for (int i = 0; i < mPhotoList.size(); i++) {
 
-            PhotoVO photoVO = mPhotoList.get(i);
-            if(photoVO.isSelected()){
-                mSelectPhotoList.add(photoVO);
+            GalleryItem galleryItem = mPhotoList.get(i);
+            if(galleryItem.isSelected()){
+                mSelectPhotoList.add(galleryItem);
             }
         }
 
@@ -61,10 +61,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
 
     /**
      * 아이템 선택시 호출되는 리스너
-     * @param onItemClickListener
+     * @param onGalleryClickListener
      */
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnItemClickListener(OnGalleryClickListener onGalleryClickListener) {
+        this.onGalleryClickListener = onGalleryClickListener;
     }
 
 
@@ -73,7 +73,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
      * @param photoList
      * @param itemLayout
      */
-    public GalleryAdapter(Activity activity, List<PhotoVO> photoList, int itemLayout) {
+    public GalleryAdapter(Activity activity, List<GalleryItem> photoList, int itemLayout) {
 
         mActivity = activity;
 
@@ -109,16 +109,16 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
     @Override
     public void onBindViewHolder(final PhotoViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
 
-        final PhotoVO photoVO = mPhotoList.get(position);
+        final GalleryItem galleryItem = mPhotoList.get(position);
 
         Glide.with(mActivity)
-                .load(photoVO.getImgPath())
+                .load(galleryItem.getImgPath())
                 .centerCrop()
                 .transition(withCrossFade())
                 .into(viewHolder.imgPhoto);
 
         //선택
-        if(photoVO.isSelected()){
+        if(galleryItem.isSelected()){
             viewHolder.layoutSelect.setVisibility(View.VISIBLE);
         }else{
             viewHolder.layoutSelect.setVisibility(View.INVISIBLE);
@@ -132,8 +132,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
             @Override
             public void onClick(View v) {
 
-                if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClick(viewHolder, position, preposition);
+                if (onGalleryClickListener != null) {
+                    onGalleryClickListener.OnItemClick(viewHolder, position, preposition);
                     preposition = viewHolder.getAbsoluteAdapterPosition();
                 }
             }

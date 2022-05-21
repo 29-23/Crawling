@@ -26,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     // Picture, Pairing Fragment에 사용될 이미지
-    // bitmap인데 filepath나 uri가 편하면 그쪽으로 변수 바꿀게용
-    public Bitmap bm;
+    public Bitmap picturebm;
+    // Home Fragmen OOTD 이미지. 파이어베이스에서 코드 가져오는걸로 고쳐야 함
+    public int tmpImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.pic:
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, pictureFragment).commit();
-
                         return true;
                     case R.id.settings:
                         getSupportFragmentManager().beginTransaction()

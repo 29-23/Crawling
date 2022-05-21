@@ -1,42 +1,44 @@
 package com.example.personalootd.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.personalootd.R;
-import com.example.personalootd.view.RecommendItem;
+import com.example.personalootd.view.OOTDItem;
 
 import java.util.List;
 
-public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder> {
+public class OOTDAdapter extends RecyclerView.Adapter<OOTDAdapter.OOTDViewHolder> {
 
     private int itemLayout;
-    private List<RecommendItem> mItemList;
+    private List<OOTDItem> mItemList;
 
-    public RecommendAdapter(List<RecommendItem> itemList, int itemLayout){
+    public OOTDAdapter(List<OOTDItem> itemList, int itemLayout){
 
         this.mItemList = itemList;
         this.itemLayout = itemLayout;
     }
 
+    public List<OOTDItem> getmItemList() {
+        return mItemList;
+    }
+
     @NonNull
     @Override
-    public RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public OOTDViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, false);
-        return new RecommendViewHolder(view);
+        return new OOTDViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecommendViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull OOTDViewHolder viewHolder, int position) {
 
-        final RecommendItem recommendItem = mItemList.get(position);
+        final OOTDItem ootdItem = mItemList.get(position);
 
 
         /*  Gallery Adapter Code 복붙.. 가져오는 코드 새로 만들어야 함
@@ -47,8 +49,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
                 .into(viewHolder.itemImg);
 
          */
-        viewHolder.itemImg.setImageResource(recommendItem.getImg());
-        viewHolder.itemName.setText(recommendItem.getImgName());
+        viewHolder.itemImg.setImageResource(ootdItem.getImg());
 
     }
 
@@ -57,17 +58,14 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         return mItemList.size();
     }
 
-
-    public static class RecommendViewHolder extends RecyclerView.ViewHolder {
+    public class OOTDViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView itemImg;
-        public TextView itemName;
 
-        public RecommendViewHolder(View itemView) {
+        public OOTDViewHolder(View itemView) {
             super(itemView);
 
-            itemImg = (ImageView) itemView.findViewById(R.id.recommend_item_img);
-            itemName = (TextView) itemView.findViewById(R.id.recommend_item_name);
+            itemImg = (ImageView) itemView.findViewById(R.id.img_ootd);
 
             itemView.setOnClickListener(new View.OnClickListener(){
 
@@ -81,6 +79,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
             });
 
         }
+
 
     }
 }

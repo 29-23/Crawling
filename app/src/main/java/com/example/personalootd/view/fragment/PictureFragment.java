@@ -19,11 +19,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.personalootd.OnItemClickListener;
+import com.example.personalootd.OnGalleryClickListener;
 import com.example.personalootd.R;
 import com.example.personalootd.view.GalleryManager;
 import com.example.personalootd.view.GridDividerDecoration;
-import com.example.personalootd.view.PhotoVO;
+import com.example.personalootd.view.GalleryItem;
 import com.example.personalootd.view.activity.MainActivity;
 import com.example.personalootd.view.adapter.GalleryAdapter;
 
@@ -41,8 +41,6 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
 
     private ImageView goBtn;
     private ImageView camBtn;
-
-    private static final int REQUEST_CAMERA = 100;
 
     public PictureFragment() {
         // Required empty public constructor
@@ -101,22 +99,10 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     /**
      * 갤러리 이미지 데이터 초기화
      */
-    private List<PhotoVO> initGalleryPathList() {
+    private List<GalleryItem> initGalleryPathList() {
 
         mGalleryManager = new GalleryManager( getActivity().getApplicationContext());
         return mGalleryManager.getAllPhotoPathList();
-    }
-
-
-    /**
-     * 확인 버튼 선택 시
-     */
-    private void selectDone() {
-
-        List<PhotoVO> selectedPhotoList = galleryAdapter.getSelectedPhotoList();
-        for (int i = 0; i < selectedPhotoList.size(); i++) {
-            // Log.i("", ">>> selectedList   :  " + selectedPhotoList.get(i).getImgPath());
-        }
     }
 
 
@@ -126,7 +112,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     private void initRecyclerGallery() {
 
         galleryAdapter = new GalleryAdapter(getActivity(), initGalleryPathList(), R.layout.item_photo);
-        galleryAdapter.setOnItemClickListener(mOnItemClickListener);
+        galleryAdapter.setOnItemClickListener(mOnGalleryClickListener);
         recyclerGallery.setAdapter(galleryAdapter);
         recyclerGallery.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         recyclerGallery.setItemAnimator(new DefaultItemAnimator());
@@ -137,39 +123,39 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     /**
      * 리사이클러뷰 아이템 선택시 호출 되는 리스너
      */
-    private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
+    private OnGalleryClickListener mOnGalleryClickListener = new OnGalleryClickListener() {
 
         @Override
         public void OnItemClick(GalleryAdapter.PhotoViewHolder photoViewHolder, int position, int preposition) {
 
-            PhotoVO photoVO = galleryAdapter.getmPhotoList().get(position);
+            GalleryItem galleryItem = galleryAdapter.getmPhotoList().get(position);
 
-            if(photoVO.isSelected()){
-                photoVO.setSelected(false);
+            if(galleryItem.isSelected()){
+                galleryItem.setSelected(false);
                 ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(null);
 
             }else{
-                photoVO.setSelected(true);
-                galleryAdapter.getmPhotoList().set(position,photoVO);
+                galleryItem.setSelected(true);
+                galleryAdapter.getmPhotoList().set(position, galleryItem);
 
-                Bitmap bm = BitmapFactory.decodeFile(photoVO.getImgPath());
+                Bitmap bm = BitmapFactory.decodeFile(galleryItem.getImgPath());
                 ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(bm);
                 //Log.d("aa", "bitmap in pic : "+ bm);
 
-                mainActivity.bm = bm;
+                mainActivity.picturebm = bm;
 
                 // 원래 아이템 하나만 선택되는거고
                 // 다른 아이템 선택하면 기존 선택 해제돼야하는데
                 // 아직 구현 안됨... ㅎㅎㅎㅎㅎㅎ
                 //Log.d("aa", "Preposition : " + preposition);
                 if (preposition > 0 ){
-                    photoVO = galleryAdapter.getmPhotoList().get(preposition);
-                    photoVO.setSelected(false);
+                    galleryItem = galleryAdapter.getmPhotoList().get(preposition);
+                    galleryItem.setSelected(false);
                 }
 
             }
 
-            galleryAdapter.getmPhotoList().set(position,photoVO);
+            galleryAdapter.getmPhotoList().set(position, galleryItem);
             galleryAdapter.notifyDataSetChanged();
 
         }

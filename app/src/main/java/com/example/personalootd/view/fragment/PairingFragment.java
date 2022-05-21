@@ -2,7 +2,6 @@ package com.example.personalootd.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +90,7 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         backBtn.setOnClickListener(this);
 
         imageView = (ImageView) view.findViewById(R.id.imageView);
-        ((ImageView)view.findViewById(R.id.cloth_img)).setImageBitmap(mainActivity.bm);
+        ((ImageView)view.findViewById(R.id.cloth_img)).setImageBitmap(mainActivity.picturebm);
 
         springPercentage = (TextView) view.findViewById(R.id.spring_percentage);
         summerPercentage = (TextView) view.findViewById(R.id.summer_percentage);
@@ -128,12 +127,7 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         recommendAdapter = new RecommendAdapter(itemList, R.layout.item_recommend);
         recommendRecyclerView.setAdapter(recommendAdapter);
         recommendRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        // 왜 0이지?
-        Log.d("aa","itemList Cnt : "+ recommendAdapter.getItemCount());
         recommendAdapter.notifyDataSetChanged() ;
-
-
     }
 
     private void getRecommendClothes() {

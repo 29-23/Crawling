@@ -1,11 +1,11 @@
 package com.example.personalootd.view;
 
-public class PhotoVO {
+public class GalleryItem {
 
     private String imgPath;
     private boolean selected;
 
-    public PhotoVO(String imgPath, boolean selected) {
+    public GalleryItem(String imgPath, boolean selected) {
         this.imgPath = imgPath;
         this.selected = selected;
     }
