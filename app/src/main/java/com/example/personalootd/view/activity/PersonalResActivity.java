@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.personalootd.R;
 
 public class PersonalResActivity extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class PersonalResActivity extends AppCompatActivity {
 
     private TextView pTypeText;     // 퍼스널컬러 텍스트
     private TextView pTypeTextEng;  // 퍼스널컬러 텍스트 영어
+    private TextView pTypeExp;
     private ImageView pTypeImg;     // 배경
     private ImageView bestColors;     // 베스트컬러 모음
     private ImageView worstColors;     // 워스트컬러 모음
@@ -36,6 +38,7 @@ public class PersonalResActivity extends AppCompatActivity {
 
         pTypeText = (TextView) findViewById(R.id.p_type_text);
         pTypeTextEng = (TextView) findViewById(R.id.p_type_eng);
+        pTypeExp = (TextView) findViewById(R.id.personal_exp_textview);
         pTypeImg = (ImageView) findViewById(R.id.p_type_bg);
         bestColors = (ImageView) findViewById(R.id.image_bestColor);
         worstColors = (ImageView) findViewById(R.id.image_worstColor);
@@ -45,30 +48,74 @@ public class PersonalResActivity extends AppCompatActivity {
         if (inputText == "spring"){
             pTypeText.setText("봄 웜톤");
             pTypeTextEng.setText("Spring Warm");
-            pTypeImg.setImageResource(R.drawable.spring_background);
-            bestColors.setImageResource(R.drawable.spring_best);
-            worstColors.setImageResource(R.drawable.winter_best);
+            pTypeExp.setText(getString(R.string.spring_exp));
+
+            Glide.with(this)
+                    .load(R.drawable.spring_background)
+                    .skipMemoryCache(true)
+                    .into(pTypeImg);
+            Glide.with(this)
+                    .load(R.drawable.spring_best)
+                    .skipMemoryCache(true)
+                    .into(bestColors);
+            Glide.with(this)
+                    .load(R.drawable.winter_best)
+                    .skipMemoryCache(true)
+                    .into(worstColors);
         }
         else if (inputText == "summer"){
             pTypeText.setText("여름 쿨톤");
             pTypeTextEng.setText("Summer Cool");
-            pTypeImg.setImageResource(R.drawable.summer_background);
-            bestColors.setImageResource(R.drawable.summer_best);
-            worstColors.setImageResource(R.drawable.autumn_best);
+            pTypeExp.setText(getString(R.string.summer_exp));
+
+            Glide.with(this)
+                    .load(R.drawable.summer_background)
+                    .skipMemoryCache(true)
+                    .into(pTypeImg);
+            Glide.with(this)
+                    .load(R.drawable.summer_best)
+                    .skipMemoryCache(true)
+                    .into(bestColors);
+            Glide.with(this)
+                    .load(R.drawable.autumn_best)
+                    .skipMemoryCache(true)
+                    .into(worstColors);
 
         }else if (inputText == "autumn"){
             pTypeText.setText("가을 웜톤");
             pTypeTextEng.setText("Autumn Warm");
-            pTypeImg.setImageResource(R.drawable.autumn_background);
-            bestColors.setImageResource(R.drawable.autumn_best);
-            worstColors.setImageResource(R.drawable.summer_best);
+            pTypeExp.setText(getString(R.string.autumn_exp));
+
+            Glide.with(this)
+                    .load(R.drawable.autumn_background)
+                    .skipMemoryCache(true)
+                    .into(pTypeImg);
+            Glide.with(this)
+                    .load(R.drawable.autumn_best)
+                    .skipMemoryCache(true)
+                    .into(bestColors);
+            Glide.with(this)
+                    .load(R.drawable.summer_best)
+                    .skipMemoryCache(true)
+                    .into(worstColors);
 
         }else if (inputText == "winter"){
             pTypeText.setText("겨울 쿨톤");
             pTypeTextEng.setText("Winter Cool");
-            pTypeImg.setImageResource(R.drawable.winter_background);
-            bestColors.setImageResource(R.drawable.winter_best);
-            worstColors.setImageResource(R.drawable.spring_best);
+            pTypeExp.setText(getString(R.string.winter_exp));
+
+            Glide.with(this)
+                    .load(R.drawable.winter_background)
+                    .skipMemoryCache(true)
+                    .into(pTypeImg);
+            Glide.with(this)
+                    .load(R.drawable.winter_best)
+                    .skipMemoryCache(true)
+                    .into(bestColors);
+            Glide.with(this)
+                    .load(R.drawable.spring_best)
+                    .skipMemoryCache(true)
+                    .into(worstColors);
 
         }
 

@@ -124,6 +124,7 @@ public class SelfAnalysisActivity extends AppCompatActivity {
             startCamera(); //start camera if permission has been granted by user
         } else {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+            Log.d("aa", "request Permissions in onCreate");
         }
 
 
@@ -260,6 +261,7 @@ public class SelfAnalysisActivity extends AppCompatActivity {
             if (allPermissionsGranted()) {
                 startCamera();
             } else {
+                Log.d("aa", "request Permissions in onRequestPermissionsResult");
                 Toast.makeText(getApplicationContext(), "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
                 this.finish();
             }

@@ -42,6 +42,8 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     private ImageView goBtn;
     private ImageView camBtn;
 
+    Bitmap bm;
+
     public PictureFragment() {
         // Required empty public constructor
     }
@@ -133,14 +135,12 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
             if(galleryItem.isSelected()){
                 galleryItem.setSelected(false);
                 ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(null);
-
             }else{
                 galleryItem.setSelected(true);
                 galleryAdapter.getmPhotoList().set(position, galleryItem);
 
-                Bitmap bm = BitmapFactory.decodeFile(galleryItem.getImgPath());
+                bm = BitmapFactory.decodeFile(galleryItem.getImgPath());
                 ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(bm);
-                //Log.d("aa", "bitmap in pic : "+ bm);
 
                 mainActivity.picturebm = bm;
 
