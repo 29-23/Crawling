@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,9 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.personalootd.OnGalleryClickListener;
 import com.example.personalootd.R;
+import com.example.personalootd.view.GalleryItem;
 import com.example.personalootd.view.GalleryManager;
 import com.example.personalootd.view.GridDividerDecoration;
-import com.example.personalootd.view.GalleryItem;
 import com.example.personalootd.view.activity.MainActivity;
 import com.example.personalootd.view.adapter.GalleryAdapter;
 
@@ -142,7 +141,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
                 bm = BitmapFactory.decodeFile(galleryItem.getImgPath());
                 ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(bm);
 
-                mainActivity.picturebm = bm;
+                mainActivity.imgPath = galleryItem.getImgPath();
 
                 // 원래 아이템 하나만 선택되는거고
                 // 다른 아이템 선택하면 기존 선택 해제돼야하는데
@@ -173,7 +172,6 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
             }
             case R.id.go_btn:
             {
-                Toast.makeText(getActivity(), "go button clicked", Toast.LENGTH_SHORT).show();
                 mainActivity.goPairingFr();
 
             }

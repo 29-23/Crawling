@@ -90,14 +90,14 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="@string/spring"/>
 
                 <TextView
                     android:id="@+id/spring_percentage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
 
@@ -106,7 +106,7 @@
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:progressTint="@color/springMainColor"/>
+                    android:progressTint="@color/springMainColor" />
 
             </LinearLayout>
 
@@ -121,14 +121,14 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="@string/summer"/>
 
                 <TextView
                     android:id="@+id/summer_percentage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
 
@@ -152,14 +152,14 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="@string/autumn"/>
 
                 <TextView
                     android:id="@+id/autumn_percentage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
 
@@ -183,14 +183,14 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="@string/winter"/>
 
                 <TextView
                     android:id="@+id/winter_percentage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
 

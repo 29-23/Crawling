@@ -3,6 +3,7 @@ package com.example.personalootd.view.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,7 +33,6 @@ public class PersonalResActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_res);
-
         btn_start = findViewById(R.id.btn_start);
         btn_reAnalysis = findViewById(R.id.btn_reAnalysis);
 
@@ -45,7 +45,8 @@ public class PersonalResActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         String inputText = preferences.getString("userColor","");
-        if (inputText == "spring"){
+
+        if (inputText.equals("spring")){
             pTypeText.setText("봄 웜톤");
             pTypeTextEng.setText("Spring Warm");
             pTypeExp.setText(getString(R.string.spring_exp));
@@ -63,7 +64,7 @@ public class PersonalResActivity extends AppCompatActivity {
                     .skipMemoryCache(true)
                     .into(worstColors);
         }
-        else if (inputText == "summer"){
+        else if (inputText.equals("summer")){
             pTypeText.setText("여름 쿨톤");
             pTypeTextEng.setText("Summer Cool");
             pTypeExp.setText(getString(R.string.summer_exp));
@@ -81,7 +82,7 @@ public class PersonalResActivity extends AppCompatActivity {
                     .skipMemoryCache(true)
                     .into(worstColors);
 
-        }else if (inputText == "autumn"){
+        }else if (inputText.equals("autumn")){
             pTypeText.setText("가을 웜톤");
             pTypeTextEng.setText("Autumn Warm");
             pTypeExp.setText(getString(R.string.autumn_exp));
@@ -99,7 +100,7 @@ public class PersonalResActivity extends AppCompatActivity {
                     .skipMemoryCache(true)
                     .into(worstColors);
 
-        }else if (inputText == "winter"){
+        }else if (inputText.equals("winter")){
             pTypeText.setText("겨울 쿨톤");
             pTypeTextEng.setText("Winter Cool");
             pTypeExp.setText(getString(R.string.winter_exp));

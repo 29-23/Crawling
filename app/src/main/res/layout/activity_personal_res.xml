@@ -65,8 +65,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
-            android:textSize="36sp"
-            android:text="봄 웜톤"/>
+            android:textSize="36sp"/>
 
         <TextView
             android:id="@+id/p_type_eng"
@@ -120,7 +119,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:scaleType="fitCenter"
-        android:src="@drawable/spring_best"
         />
 
 
@@ -142,7 +140,6 @@
         app:layout_constraintTop_toBottomOf="@+id/text_worstColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/winter_best"
         />
 
     <androidx.appcompat.widget.AppCompatButton

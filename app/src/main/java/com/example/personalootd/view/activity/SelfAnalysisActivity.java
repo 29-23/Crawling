@@ -162,20 +162,22 @@ public class SelfAnalysisActivity extends AppCompatActivity {
                 if (cnt > 11){
                     if (tem > 0){ // 웜톤
                         if (bri > 0){ // 봄
+                            Log.d("aa", "spring");
                             editor.putString("userColor", "spring");
                         }else { // 가을
+                            Log.d("aa", "autumn");
                             editor.putString("userColor", "autumn");
                         }
                     }else{ // 쿨톤
                         if (con > 0){ // 겨울
+                            Log.d("aa", "winter");
                             editor.putString("userColor", "winter");
                         }else{ // 여름
+                            Log.d("aa", "summer");
                             editor.putString("userColor", "summer");
                         }
                     }
                     editor.commit();
-
-
                     Intent intent = new Intent(SelfAnalysisActivity.this, PersonalResActivity.class);
                     startActivity(intent); //액티비티 이동
                 }

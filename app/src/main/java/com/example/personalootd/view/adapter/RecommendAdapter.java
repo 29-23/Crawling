@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.personalootd.R;
 import com.example.personalootd.view.RecommendItem;
 
@@ -26,6 +27,10 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         this.itemLayout = itemLayout;
     }
 
+    public List<RecommendItem> getmItemList() {
+        return mItemList;
+    }
+
     @NonNull
     @Override
     public RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -38,17 +43,12 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
 
         final RecommendItem recommendItem = mItemList.get(position);
 
-
-        /*  Gallery Adapter Code 복붙.. 가져오는 코드 새로 만들어야 함
-        Glide.with(mActivity)
-                .load(viewHolder.getImgPath())
-                .centerCrop()
-                .transition(withCrossFade())
+        Glide.with(viewHolder.itemView)
+                .load(recommendItem.getImage())
                 .into(viewHolder.itemImg);
 
-         */
-        viewHolder.itemImg.setImageResource(recommendItem.getImg());
-        viewHolder.itemName.setText(recommendItem.getImgName());
+        viewHolder.itemBrand.setText(recommendItem.getBrand());
+        viewHolder.itemName.setText(recommendItem.getName());
 
     }
 
@@ -61,12 +61,14 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
     public static class RecommendViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView itemImg;
-        public TextView itemName;
+        public TextView  itemBrand;
+        public TextView  itemName;
 
         public RecommendViewHolder(View itemView) {
             super(itemView);
 
             itemImg = (ImageView) itemView.findViewById(R.id.recommend_item_img);
+            itemBrand = (TextView) itemView.findViewById(R.id.recommend_item_brand);
             itemName = (TextView) itemView.findViewById(R.id.recommend_item_name);
 
             itemView.setOnClickListener(new View.OnClickListener(){

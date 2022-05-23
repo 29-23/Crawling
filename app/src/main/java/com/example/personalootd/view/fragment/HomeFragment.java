@@ -1,7 +1,11 @@
 package com.example.personalootd.view.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,11 @@ import com.example.personalootd.R;
 import com.example.personalootd.view.OOTDItem;
 import com.example.personalootd.view.activity.MainActivity;
 import com.example.personalootd.view.adapter.OOTDAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +34,16 @@ import java.util.List;
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
     MainActivity mainActivity;
+    SharedPreferences preferences;
 
     // 추천 의류 리사이클러뷰
     private RecyclerView ootdRecyclerView;
     private OOTDAdapter ootdAdapter;
     private List<OOTDItem> itemList;
+
+    //Firebase DB
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -64,6 +78,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        preferences = this.getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        String userColor = preferences.getString("userColor","");
 
         return view;
 
@@ -82,11 +98,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         ootdRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         // 이 아래에 itemList 초기화 코드 작성
-        for (int i=0; i<10; i++) {
-            itemList.add(new OOTDItem(R.drawable.spring));
-        }
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("codi/autumn");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                itemList.clear();
+                for (DataSnapshot snapshot : datasnapshot.getChildren()) { // 반복문으로 데이터 List를 추출해냄
+                    OOTDItem ootdItem = snapshot.getValue(OOTDItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
+                    itemList.add(ootdItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                }
+                ootdAdapter.notifyDataSetChanged() ;
+            }
 
-        ootdAdapter = new OOTDAdapter(itemList, R.layout.item_ootd);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("aa", String.valueOf(error.toException()));
+            }
+        });
+
+        ootdAdapter = new OOTDAdapter(itemList, R.layout.item_ootd, getContext());
+        ootdAdapter.setOnItemClickListener(mOnOOTDClickListener);
         ootdRecyclerView.setAdapter(ootdAdapter);
         ootdRecyclerView.setItemAnimator(new DefaultItemAnimator());
         ootdAdapter.notifyDataSetChanged() ;
@@ -97,8 +129,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         @Override
         public void OnItemClick(OOTDAdapter.OOTDViewHolder ootdViewHolder, int position) {
             // firebase -> ootd 정보 -> Info Fragment
-            OOTDItem ootdItem = ootdAdapter.getmItemList().get(position);
-            mainActivity.tmpImg = OOTDItem.getImg();
+
 
         }
     };
