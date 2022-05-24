@@ -1,8 +1,8 @@
 package com.example.personalootd.view.fragment;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.personalootd.R;
 import com.example.personalootd.view.RecommendItem;
 import com.example.personalootd.view.activity.MainActivity;
@@ -105,8 +106,12 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         backBtn = view.findViewById(R.id.back_btn);
         backBtn.setOnClickListener(this);
 
-        imageView = view.findViewById(R.id.imageView);
-        ((ImageView)view.findViewById(R.id.cloth_img)).setImageBitmap(BitmapFactory.decodeFile(mainActivity.imgPath));
+        imageView = view.findViewById(R.id.cloth_img);
+        Log.d("PairingFragment",mainActivity.imgPath );
+        Glide.with(view)
+                .load(mainActivity.imgPath)
+                .into(imageView);
+        //((ImageView)view.findViewById(R.id.imageView)).setImageBitmap(BitmapFactory.decodeFile(mainActivity.imgPath));
 
         springPercentage = view.findViewById(R.id.spring_percentage);
         summerPercentage = view.findViewById(R.id.summer_percentage);

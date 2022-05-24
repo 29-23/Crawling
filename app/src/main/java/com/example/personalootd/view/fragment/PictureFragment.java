@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +41,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
 
     private ImageView goBtn;
     private ImageView camBtn;
+    private ImageView imageView;
 
     Bitmap bm;
 
@@ -72,8 +74,9 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
 
         View view = inflater.inflate(R.layout.fragment_picture, container, false);
 
-        camBtn = (ImageView) view.findViewById(R.id.cameraIcon);
-        goBtn = (ImageView) view.findViewById(R.id.go_btn);
+        camBtn = view.findViewById(R.id.cameraIcon);
+        goBtn =  view.findViewById(R.id.go_btn);
+        imageView = view.findViewById(R.id.imageView);
 
         // 버튼 클릭 리스너
         camBtn.setOnClickListener(this);
@@ -185,7 +188,11 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
             }
             case R.id.go_btn:
             {
-                mainActivity.goPairingFr();
+                if(imageView.getDrawable() == null){
+                    Toast.makeText(getActivity().getApplicationContext(), "Select Picture.", Toast.LENGTH_SHORT).show();
+                }else{
+                    mainActivity.goPairingFr();
+                }
 
             }
 

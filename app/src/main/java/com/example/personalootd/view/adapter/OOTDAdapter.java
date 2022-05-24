@@ -77,8 +77,9 @@ public class OOTDAdapter extends RecyclerView.Adapter<OOTDAdapter.OOTDViewHolder
                 public void onClick(View view) {
                     final int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        MainActivity activity = (MainActivity)mContext;
-                        activity.goInfoFr();
+                        MainActivity mainActivity = (MainActivity)mContext;
+                        mainActivity.imgPath = mItemList.get(position).getImage();
+                        mainActivity.goInfoFr();
                     }
                 }
             });

@@ -2,7 +2,6 @@ package com.example.personalootd.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.personalootd.R;
 import com.example.personalootd.view.activity.MainActivity;
 
@@ -83,8 +83,9 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
         backBtn.setOnClickListener(this);
 
         imageView = view.findViewById(R.id.cloth_img);
-        imageView.setImageResource(R.drawable.summer_background);
-        //((ImageView)view.findViewById(R.id.cloth_img)).setImageBitmap(mainActivity.);
+        Glide.with(view)
+                .load(mainActivity.imgPath)
+                .into(imageView);
 
         springPercentage = view.findViewById(R.id.spring_percentage);
         summerPercentage = view.findViewById(R.id.summer_percentage);
@@ -140,9 +141,8 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch(view.getId())
         {
-            case R.id.back_btn:
+            case R.id.back_btn2:
             {
-                Log.d("aa", "back button clicked");
                 // go to Picture Fragment
                 mainActivity.goHomeFr();
                 break;
