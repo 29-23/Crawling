@@ -89,7 +89,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ootdRecyclerView = (RecyclerView) view.findViewById(R.id.ootd_recyclerview);
-        initRecyclerView();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                initRecyclerView();
+            }
+        });
 
     }
 
@@ -107,6 +112,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 for (DataSnapshot snapshot : datasnapshot.getChildren()) { // 반복문으로 데이터 List를 추출해냄
                     OOTDItem ootdItem = snapshot.getValue(OOTDItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
                     itemList.add(ootdItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                    Log.d("home", "Brand : " + ootdItem.getCategory());
+                    Log.d("home", "Image : " + ootdItem.getImage());
                 }
                 ootdAdapter.notifyDataSetChanged() ;
             }

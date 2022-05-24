@@ -86,7 +86,13 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerGallery = (RecyclerView) view.findViewById(R.id.recyclerGallery);
-        initRecyclerGallery();
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                initRecyclerGallery();
+            }
+        });
 
     }
 
@@ -129,33 +135,40 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
         @Override
         public void OnItemClick(GalleryAdapter.PhotoViewHolder photoViewHolder, int position, int preposition) {
 
-            GalleryItem galleryItem = galleryAdapter.getmPhotoList().get(position);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    GalleryItem galleryItem = galleryAdapter.getmPhotoList().get(position);
 
-            if(galleryItem.isSelected()){
-                galleryItem.setSelected(false);
-                ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(null);
-            }else{
-                galleryItem.setSelected(true);
-                galleryAdapter.getmPhotoList().set(position, galleryItem);
+                    if(galleryItem.isSelected()){
+                        galleryItem.setSelected(false);
+                        ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(null);
+                    }else{
+                        galleryItem.setSelected(true);
+                        galleryAdapter.getmPhotoList().set(position, galleryItem);
 
-                bm = BitmapFactory.decodeFile(galleryItem.getImgPath());
-                ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(bm);
+                        bm = BitmapFactory.decodeFile(galleryItem.getImgPath());
+                        ((ImageView)getView().findViewById(R.id.imageView)).setImageBitmap(bm);
 
-                mainActivity.imgPath = galleryItem.getImgPath();
+                        mainActivity.imgPath = galleryItem.getImgPath();
 
-                // 원래 아이템 하나만 선택되는거고
-                // 다른 아이템 선택하면 기존 선택 해제돼야하는데
-                // 아직 구현 안됨... ㅎㅎㅎㅎㅎㅎ
-                //Log.d("aa", "Preposition : " + preposition);
-                if (preposition > 0 ){
-                    galleryItem = galleryAdapter.getmPhotoList().get(preposition);
-                    galleryItem.setSelected(false);
+                        // 원래 아이템 하나만 선택되는거고
+                        // 다른 아이템 선택하면 기존 선택 해제돼야하는데
+                        // 아직 구현 안됨... ㅎㅎㅎㅎㅎㅎ
+                        //Log.d("aa", "Preposition : " + preposition);
+                        if (preposition > 0 ){
+                            galleryItem = galleryAdapter.getmPhotoList().get(preposition);
+                            galleryItem.setSelected(false);
+                        }
+
+                    }
+
+                    galleryAdapter.getmPhotoList().set(position, galleryItem);
+                    galleryAdapter.notifyDataSetChanged();
                 }
+            });
 
-            }
 
-            galleryAdapter.getmPhotoList().set(position, galleryItem);
-            galleryAdapter.notifyDataSetChanged();
 
         }
     };

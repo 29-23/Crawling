@@ -91,8 +91,6 @@ public class SelfAnalysisActivity extends AppCompatActivity {
         preferences = getSharedPreferences( "UserInfo" , MODE_PRIVATE);
         editor = preferences.edit();
 
-
-
         // db
         DBHelper helper;
         SQLiteDatabase db;
@@ -159,21 +157,18 @@ public class SelfAnalysisActivity extends AppCompatActivity {
                 // 점수 계산
                 cnt++;
 
+
                 if (cnt > 11){
                     if (tem > 0){ // 웜톤
                         if (bri > 0){ // 봄
-                            Log.d("aa", "spring");
                             editor.putString("userColor", "spring");
                         }else { // 가을
-                            Log.d("aa", "autumn");
                             editor.putString("userColor", "autumn");
                         }
                     }else{ // 쿨톤
                         if (con > 0){ // 겨울
-                            Log.d("aa", "winter");
                             editor.putString("userColor", "winter");
                         }else{ // 여름
-                            Log.d("aa", "summer");
                             editor.putString("userColor", "summer");
                         }
                     }
@@ -184,23 +179,29 @@ public class SelfAnalysisActivity extends AppCompatActivity {
 
                 calScore(selectedBtnNum);
                 if(cnt <= 10) {
-                    if (cursor != null && cursor.getCount() > 0) {
-                        cursor.moveToNext();
-                        color1[0] = Integer.decode("0x" + cursor.getString(1));
-                        color1[1] = cursor.getInt(2);
-                        color1[2] = cursor.getInt(3);
-                        color1[3] = cursor.getInt(4);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (cursor != null && cursor.getCount() > 0) {
+                                cursor.moveToNext();
+                                color1[0] = Integer.decode("0x" + cursor.getString(1));
+                                color1[1] = cursor.getInt(2);
+                                color1[2] = cursor.getInt(3);
+                                color1[3] = cursor.getInt(4);
 
-                        cursor.moveToNext();
-                        color2[0] = Integer.decode("0x" + cursor.getString(1));
-                        color2[1] = cursor.getInt(2);
-                        color2[2] = cursor.getInt(3);
-                        color2[3] = cursor.getInt(4);
+                                cursor.moveToNext();
+                                color2[0] = Integer.decode("0x" + cursor.getString(1));
+                                color2[1] = cursor.getInt(2);
+                                color2[2] = cursor.getInt(3);
+                                color2[3] = cursor.getInt(4);
 
-                        colorBtn1.setBackgroundColor(0xFF000000 + color1[0]);
-                        colorBtn2.setBackgroundColor(0xFF000000 + color2[0]);
-                        background.setBackgroundColor(0xFF000000 + color1[0]);
-                    }
+                                colorBtn1.setBackgroundColor(0xFF000000 + color1[0]);
+                                colorBtn2.setBackgroundColor(0xFF000000 + color2[0]);
+                                background.setBackgroundColor(0xFF000000 + color1[0]);
+                            }
+                        }
+                    });
+
                 }else {
                     colorBtn1.setBackgroundColor(0xFF444444);
                     colorBtn2.setBackgroundColor(0xFFff0748);

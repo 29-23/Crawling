@@ -79,7 +79,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             >
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/spring_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -90,27 +90,43 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
+                    android:id="@+id/spring_name"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="@string/spring"/>
+                    android:text="@string/spring"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/spring_percentage"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/spring_name"/>
 
                 <ProgressBar
                     android:id="@+id/spring_progressbar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/spring_percentage"
+
+                    app:layout_constraintWidth_percent="0.7"
                     android:progressTint="@color/springMainColor" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/summer_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -121,27 +137,43 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
+                    android:id="@+id/summer_name"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="@string/summer"/>
+                    android:text="@string/summer"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/summer_percentage"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/summer_name"/>
 
                 <ProgressBar
                     android:id="@+id/summer_progressbar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:progressTint="@color/summerMainColor"/>
 
-            </LinearLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/summer_percentage"
 
-            <LinearLayout
+                    app:layout_constraintWidth_percent="0.7"
+                    android:progressTint="@color/summerMainColor" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/autumn_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -152,27 +184,43 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
+                    android:id="@+id/autumn_name"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="@string/autumn"/>
+                    android:text="@string/autumn"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/autumn_percentage"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/autumn_name"/>
 
                 <ProgressBar
                     android:id="@+id/autumn_progressbar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:progressTint="@color/autumnMainColor"/>
 
-            </LinearLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/autumn_percentage"
 
-            <LinearLayout
+                    app:layout_constraintWidth_percent="0.7"
+                    android:progressTint="@color/autumnMainColor" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/winter_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -183,27 +231,41 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
+                    android:id="@+id/winter_name"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="@string/winter"/>
+                    android:text="@string/winter"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/winter_percentage"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/winter_name"/>
 
                 <ProgressBar
                     android:id="@+id/winter_progressbar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/winter_percentage"
+
+                    app:layout_constraintWidth_percent="0.7"
                     android:progressTint="@color/winterMainColor" />
 
-            </LinearLayout>
-
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

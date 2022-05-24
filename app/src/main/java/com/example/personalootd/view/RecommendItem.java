@@ -23,15 +23,15 @@ public class RecommendItem {
     }
 
     public String getBrand(){
-        return this.brand;
+        return brand;
     }
 
-    public void setImage(String img) {
+    public void setImage(String image) {
         this.image = image;
     }
 
     public String getImage() {
-        return this.image;
+        return image;
     }
 
     public void setLink(String link){
@@ -39,7 +39,7 @@ public class RecommendItem {
     }
 
     public String getLink(){
-        return this.link;
+        return link;
     }
 
     public void setName(String name) {
@@ -52,6 +52,6 @@ public class RecommendItem {
 
     public void setNum (String num) { this.num = num; }
 
-    public String getNum () { return this.num; }
+    public String getNum () { return num; }
 
 }

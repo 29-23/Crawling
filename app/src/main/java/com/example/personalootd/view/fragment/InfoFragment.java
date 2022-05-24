@@ -79,24 +79,24 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
 
         View view =  inflater.inflate(R.layout.fragment_info, container, false);
 
-        backBtn = (ImageView) view.findViewById(R.id.back_btn2);
+        backBtn = view.findViewById(R.id.back_btn2);
         backBtn.setOnClickListener(this);
 
-        imageView = (ImageView) view.findViewById(R.id.cloth_img);
+        imageView = view.findViewById(R.id.cloth_img);
         imageView.setImageResource(R.drawable.summer_background);
         //((ImageView)view.findViewById(R.id.cloth_img)).setImageBitmap(mainActivity.);
 
-        springPercentage = (TextView) view.findViewById(R.id.spring_percentage);
-        summerPercentage = (TextView) view.findViewById(R.id.summer_percentage);
-        autumnPercentage = (TextView) view.findViewById(R.id.autumn_percentage);
-        winterPercentage = (TextView) view.findViewById(R.id.winter_percentage);
+        springPercentage = view.findViewById(R.id.spring_percentage);
+        summerPercentage = view.findViewById(R.id.summer_percentage);
+        autumnPercentage = view.findViewById(R.id.autumn_percentage);
+        winterPercentage = view.findViewById(R.id.winter_percentage);
 
-        springProgressBar = (ProgressBar) view.findViewById(R.id.spring_progressbar);
-        summerProgressBar = (ProgressBar) view.findViewById(R.id.summer_progressbar);
-        autumnProgressBar = (ProgressBar) view.findViewById(R.id.autumn_progressbar);
-        winterProgressBar = (ProgressBar) view.findViewById(R.id.winter_progressbar);
+        springProgressBar = view.findViewById(R.id.spring_progressbar);
+        summerProgressBar = view.findViewById(R.id.summer_progressbar);
+        autumnProgressBar = view.findViewById(R.id.autumn_progressbar);
+        winterProgressBar = view.findViewById(R.id.winter_progressbar);
 
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        return view;
     }
 
     @Override

@@ -135,54 +135,9 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("clothes/top");
-        /*Query query = databaseReference.child("19831");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                itemList.clear();
-
-                if (dataSnapshot.exists()) {
-                    // dataSnapshot is the "issue" node with all children with id 0
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) { // 반복문으로 데이터 List를 추출해냄
-                        RecommendItem recommendItem = snapshot.getValue(RecommendItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
-                        itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-                    }
-                }
-                recommendAdapter.notifyDataSetChanged() ;
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-        databaseReference = database.getReference("clothes/top");
-        /*
-        // 여기는 "전체" 데이터 불러오는 코드
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                itemList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { // 반복문으로 데이터 List를 추출해냄
-                    //RecommendItem recommendItem = snapshot.getValue(RecommendItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
-                    RecommendItem recommendItem = snapshot.child("19831").getValue(RecommendItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
-                    itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-                }
-
-                recommendAdapter.notifyDataSetChanged() ;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("ParingFragment", String.valueOf(error.toException()));
-            }
-        });
-        */
 
         // 여기는 "19831" 하나만 불러오는 코드...
         // 문제 1. 노드 하나하나 리스너 설정해야하나...? 쿼리에 한번에 조건 여러 개 못하나?
-        // 문제 2. 데이터 1개만 부르는건 성공했는데 여전히 사진이 안 뜸. url 처리 문제인가..? 근데 ootd는 뜬단말야
         Query query = databaseReference.orderByKey().equalTo("19831");
 
         query.addValueEventListener(new ValueEventListener() {
@@ -191,6 +146,7 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
                 for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
                     RecommendItem recommendItem = userSnapshot.getValue(RecommendItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
                     itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+
                 }
                 recommendAdapter.notifyDataSetChanged() ;
             }
