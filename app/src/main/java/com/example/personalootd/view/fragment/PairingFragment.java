@@ -150,7 +150,8 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
 
         // 여기는 "19831" 하나만 불러오는 코드...
         // 문제 1. 노드 하나하나 리스너 설정해야하나...? 쿼리에 한번에 조건 여러 개 못하나?
-        Query query = databaseReference.orderByKey().equalTo("19831");
+        String itemNum = "19831";
+        Query query = databaseReference.orderByKey().equalTo(itemNum);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override

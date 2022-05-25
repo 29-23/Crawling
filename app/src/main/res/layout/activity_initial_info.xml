@@ -20,8 +20,6 @@
         android:text="당신의 퍼스널컬러는?"
         />
 
-
-
     <Button
         android:id="@+id/btn_move"
         android:layout_width="match_parent"

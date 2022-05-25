@@ -12,10 +12,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.personalootd.R;
+import com.example.personalootd.view.RecommendItem;
 import com.example.personalootd.view.activity.MainActivity;
+import com.example.personalootd.view.adapter.RecommendAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Home에서 OOTD 누르면 정보 설명하는 곳
 public class InfoFragment extends Fragment implements View.OnClickListener{
@@ -39,11 +53,14 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     private ProgressBar autumnProgressBar;
     private ProgressBar winterProgressBar;
 
+    //Firebase DB
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+
     // 코디 제품
-    private ImageView ootdImg1;
-    private TextView ootdName1;
-    private ImageView ootdImg2;
-    private TextView ootdName2;
+    private RecyclerView recommendRecyclerView;
+    private RecommendAdapter recommendAdapter;
+    private List<RecommendItem> itemList;
 
     public InfoFragment() {
         // Required empty public constructor
@@ -97,7 +114,53 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
         autumnProgressBar = view.findViewById(R.id.autumn_progressbar);
         winterProgressBar = view.findViewById(R.id.winter_progressbar);
 
+        recommendRecyclerView = view.findViewById(R.id.ootd_cloths_recyclerview);
+
+        String top, bottom;
+        // 여기에 값 넣어주세요~
+        setItem("19831","19831");
+
+
         return view;
+    }
+
+
+    private void setItem(String top, String bottom) {
+        itemList = new ArrayList<>();
+        recommendRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("clothes/top");
+
+        Query query = databaseReference.orderByKey().equalTo(top);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    RecommendItem recommendItem = userSnapshot.getValue(RecommendItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
+                    itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+
+                }
+                recommendAdapter.notifyDataSetChanged() ;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
+        Query query2 = databaseReference.orderByKey().equalTo(bottom);
+
+
+        setPercentage();
+
+        recommendAdapter = new RecommendAdapter(itemList, R.layout.item_recommend);
+        recommendRecyclerView.setAdapter(recommendAdapter);
+        recommendRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        recommendAdapter.notifyDataSetChanged() ;
+
     }
 
     @Override
