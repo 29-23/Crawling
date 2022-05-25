@@ -45,6 +45,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
+    // 사용자 퍼스널컬러
+    private String userColor;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -79,7 +82,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         preferences = this.getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
-        String userColor = preferences.getString("userColor","");
+        userColor = preferences.getString("userColor","");
 
         return view;
 
@@ -104,7 +107,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         // 이 아래에 itemList 초기화 코드 작성
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("codi/autumn");
+        databaseReference = database.getReference("codi/"+userColor);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {

@@ -1,8 +1,10 @@
 package com.example.personalootd.view.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,7 @@ import java.util.List;
 public class PairingFragment extends Fragment implements View.OnClickListener{
 
     MainActivity mainActivity;
+    SharedPreferences preferences;
 
     //백 버튼
     private ImageView backBtn;
@@ -68,6 +71,9 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     //Firebase DB
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+
+    // 사용자 퍼스널컬러
+    private String userColor;
 
     public PairingFragment() {
         // Required empty public constructor
@@ -107,11 +113,9 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         backBtn.setOnClickListener(this);
 
         imageView = view.findViewById(R.id.cloth_img);
-        Log.d("PairingFragment",mainActivity.imgPath );
         Glide.with(view)
                 .load(mainActivity.imgPath)
                 .into(imageView);
-        //((ImageView)view.findViewById(R.id.imageView)).setImageBitmap(BitmapFactory.decodeFile(mainActivity.imgPath));
 
         springPercentage = view.findViewById(R.id.spring_percentage);
         summerPercentage = view.findViewById(R.id.summer_percentage);
@@ -137,6 +141,9 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     private void initRecyclerView() {
         itemList = new ArrayList<>();
         recommendRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        preferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        userColor = preferences.getString("userColor","");
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("clothes/top");

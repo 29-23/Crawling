@@ -17,7 +17,6 @@ public class InitialInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_info);
-
         btn_move = findViewById(R.id.btn_move);
 
         //다음 누르면 실행되는 곳 (info -> selfAnalysis)
@@ -31,4 +30,5 @@ public class InitialInfoActivity extends AppCompatActivity {
         });
 
     }
+
 }
