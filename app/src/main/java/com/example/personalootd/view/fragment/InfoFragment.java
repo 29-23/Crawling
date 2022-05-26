@@ -31,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-// Home에서 OOTD 누르면 정보 설명하는 곳
+// Home에서 OOTD 누르면 정보 설명하는 프래그먼트
 public class InfoFragment extends Fragment implements View.OnClickListener{
 
     MainActivity mainActivity;
@@ -116,28 +116,22 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
 
         recommendRecyclerView = view.findViewById(R.id.ootd_cloths_recyclerview);
 
-        String top, bottom;
-        // 여기에 값 넣어주세요~
-        setItem("19831","19831");
+        // 여기 !!!! 이거 !!!!
+        // numList에 불러올 ID 배열 연결하면 됨!!!!
+        List<String> numList = new ArrayList<>();
+        numList.add("19831");
 
+        setItem(numList);
 
         return view;
     }
 
-
-    private void setItem(String top, String bottom) {
+    private void setItem(List<String> numList) {
         itemList = new ArrayList<>();
         recommendRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("clothes/top");
-
-        // 여기 !!!! 이거 !!!!
-        // numList에 불러올 ID 배열 연결하면 됨!!!!
-        List<String> numList = new ArrayList<>();
-
-        // 이 세 줄은 테스트 용이니까 꼭 지우기
-        numList.add("19831");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -208,22 +202,20 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     private void setPercentage() {
 
         // spring, summer autumn, winter 순서
-
-        String[] text = new String [4];
         int [] percent = new int [4];
+        String[] text = new String [4];
 
         // 이 아래 코드에 옷 사진 퍼스널컬러 분석 결과 넣으면 됨
-        text[0] = "10%";
-        text[1] = "20%";
-        text[2] = "30%";
-        text[3] = "90%";
-
         percent[0] = 10;
         percent[1] = 20;
         percent[2] = 30;
         percent[3] = 90;
 
-        // 이 아래는 안 봐도 됨
+        text[0] = percent[0]+"%";
+        text[1] = percent[1]+"%";
+        text[2] = percent[2]+"%";
+        text[3] = percent[3]+"%";
+
         springPercentage.setText(text[0]);
         summerPercentage.setText(text[1]);
         autumnPercentage.setText(text[2]);

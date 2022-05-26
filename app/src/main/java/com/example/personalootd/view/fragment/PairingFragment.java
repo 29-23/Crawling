@@ -134,19 +134,6 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recommendRecyclerView = view.findViewById(R.id.recommend_cloths_recyclerview);
-        initRecyclerView();
-
-    }
-
-    private void initRecyclerView() {
-        itemList = new ArrayList<>();
-        recommendRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        preferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
-        userColor = preferences.getString("userColor","");
-
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("clothes/top");
 
         // 여기 !!!! 이거 !!!!
         // numList에 불러올 ID 배열 연결하면 됨!!!!
@@ -156,6 +143,19 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         numList.add("19831");
         numList.add("19836");
         numList.add("19856");
+
+        initRecyclerView(numList);
+    }
+
+    private void initRecyclerView(List<String> numList) {
+        itemList = new ArrayList<>();
+        recommendRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        preferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        userColor = preferences.getString("userColor","");
+
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("clothes/top");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -193,22 +193,20 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     private void setPercentage() {
 
         // spring, summer autumn, winter 순서
-
-        String[] text = new String [4];
         int [] percent = new int [4];
+        String[] text = new String [4];
 
         // 이 아래 코드에 옷 사진 퍼스널컬러 분석 결과 넣으면 됨
-        text[0] = "10%";
-        text[1] = "20%";
-        text[2] = "30%";
-        text[3] = "90%";
-
         percent[0] = 10;
         percent[1] = 20;
         percent[2] = 30;
         percent[3] = 90;
 
-        // 이 아래는 안 봐도 됨
+        text[0] = percent[0]+"%";
+        text[1] = percent[1]+"%";
+        text[2] = percent[2]+"%";
+        text[3] = percent[3]+"%";
+
         springPercentage.setText(text[0]);
         summerPercentage.setText(text[1]);
         autumnPercentage.setText(text[2]);
