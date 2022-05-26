@@ -138,8 +138,32 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
 
         // 이 세 줄은 테스트 용이니까 꼭 지우기
         numList.add("19831");
-        numList.add("19836");
-        numList.add("19856");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    if(numList.size() == 0) break;
+                    RecommendItem recommendItem = userSnapshot.getValue(RecommendItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
+                    for (int i=0; i < numList.size(); i++){
+                        String itemNum = numList.get(i);
+                        if (itemNum.equals(recommendItem.getNum())){
+                            Log.d("itemNum",itemNum );
+                            Log.d("recommendItem.getNum()",recommendItem.getNum() );
+                            itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                        }
+                    }
+                }
+                recommendAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+
+        databaseReference = database.getReference("clothes/bottom");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -165,7 +189,6 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
                 throw error.toException();
             }
         });
-
 
         setPercentage();
 
