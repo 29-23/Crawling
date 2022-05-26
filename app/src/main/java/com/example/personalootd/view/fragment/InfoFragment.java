@@ -2,6 +2,7 @@ package com.example.personalootd.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -132,26 +132,39 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("clothes/top");
 
-        Query query = databaseReference.orderByKey().equalTo(top);
+        // 여기 !!!! 이거 !!!!
+        // numList에 불러올 ID 배열 연결하면 됨!!!!
+        List<String> numList = new ArrayList<>();
 
-        query.addValueEventListener(new ValueEventListener() {
+        // 이 세 줄은 테스트 용이니까 꼭 지우기
+        numList.add("19831");
+        numList.add("19836");
+        numList.add("19856");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    if(numList.size() == 0) break;
                     RecommendItem recommendItem = userSnapshot.getValue(RecommendItem.class); // 만들어뒀던 User 객체에 데이터를 담는다.
-                    itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-
+                    for (int i=0; i < numList.size(); i++){
+                        String itemNum = numList.get(i);
+                        if (itemNum.equals(recommendItem.getNum())){
+                            Log.d("itemNum",itemNum );
+                            Log.d("recommendItem.getNum()",recommendItem.getNum() );
+                            itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                            numList.remove(i);
+                        }
+                    }
                 }
-                recommendAdapter.notifyDataSetChanged() ;
+                recommendAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                throw databaseError.toException();
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
             }
         });
-
-        Query query2 = databaseReference.orderByKey().equalTo(bottom);
 
 
         setPercentage();
