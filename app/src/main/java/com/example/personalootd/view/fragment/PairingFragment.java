@@ -69,6 +69,7 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     //Firebase DB
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private ValueEventListener valueEventListener;
 
     // 사용자 퍼스널컬러
     private String userColor;
@@ -250,5 +251,6 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         super.onDetach();
         mainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         mainActivity =null;
+        databaseReference.removeEventListener(valueEventListener);
     }
 }
