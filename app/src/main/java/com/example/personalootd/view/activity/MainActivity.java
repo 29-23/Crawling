@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private PairingFragment pairingFragment;
     private InfoFragment infoFragment;
 
-    private BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView;
 
     // Picture, Pairing Fragment에 사용될 이미지
     public String imgPath;

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,9 +103,15 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-
+        Log.d("PictureFragment", "onResume");
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("PictureFragment", "onPause");
+
+    }
 
     /**
      * 갤러리 이미지 데이터 초기화

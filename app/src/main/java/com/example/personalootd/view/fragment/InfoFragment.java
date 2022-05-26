@@ -79,12 +79,6 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mainActivity =null;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -142,8 +136,6 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
                     for (int i=0; i < numList.size(); i++){
                         String itemNum = numList.get(i);
                         if (itemNum.equals(recommendItem.getNum())){
-                            Log.d("itemNum",itemNum );
-                            Log.d("recommendItem.getNum()",recommendItem.getNum() );
                             itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
                         }
                     }
@@ -168,8 +160,6 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
                     for (int i=0; i < numList.size(); i++){
                         String itemNum = numList.get(i);
                         if (itemNum.equals(recommendItem.getNum())){
-                            Log.d("itemNum",itemNum );
-                            Log.d("recommendItem.getNum()",recommendItem.getNum() );
                             itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
                             numList.remove(i);
                         }
@@ -240,5 +230,12 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
             }
 
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+        mainActivity =null;
     }
 }

@@ -5,7 +5,6 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,13 +83,6 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         mainActivity =(MainActivity)getActivity();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mainActivity =null;
-    }
-
-
     public static PairingFragment newInstance() {
         PairingFragment fragment = new PairingFragment();
         return fragment;
@@ -167,8 +159,6 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
                     for (int i=0; i < numList.size(); i++){
                         String itemNum = numList.get(i);
                         if (itemNum.equals(recommendItem.getNum())){
-                            Log.d("itemNum",itemNum );
-                            Log.d("recommendItem.getNum()",recommendItem.getNum() );
                             itemList.add(recommendItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
                             numList.remove(i);
                         }
@@ -253,5 +243,12 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
             }
 
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+        mainActivity =null;
     }
 }
