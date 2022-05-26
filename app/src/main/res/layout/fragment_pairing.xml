@@ -57,12 +57,15 @@
 
         <TextView
             android:id="@+id/recommend_text"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_margin="8dp"
-            android:textSize="24sp"
+            android:textSize="16sp"
+
+            app:layout_constraintHeight_percent=".05"
 
             app:layout_constraintTop_toBottomOf="@id/cloth_img"
+            app:layout_constraintBottom_toTopOf="@id/season_percentage_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
@@ -71,8 +74,8 @@
             android:id="@+id/season_percentage_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
-            app:layout_constraintHeight_percent=".25"
+            android:padding="20dp"
+            app:layout_constraintHeight_percent=".2"
 
             app:layout_constraintTop_toBottomOf="@id/recommend_text"
             app:layout_constraintStart_toStartOf="parent"
@@ -115,14 +118,17 @@
                     android:id="@+id/spring_progressbar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_percent="0.3"
 
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/spring_percentage"
+                    app:layout_constraintEnd_toEndOf="@id/spring_layout"
 
-                    app:layout_constraintWidth_percent="0.7"
-                    android:progressTint="@color/springMainColor" />
+                    android:progressDrawable="@drawable/progress"
+                    android:progressTint="@color/springMainColor"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -162,14 +168,17 @@
                     android:id="@+id/summer_progressbar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_percent="0.3"
 
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/summer_percentage"
+                    app:layout_constraintEnd_toEndOf="@id/summer_layout"
 
-                    app:layout_constraintWidth_percent="0.7"
-                    android:progressTint="@color/summerMainColor" />
+                    android:progressDrawable="@drawable/progress"
+                    android:progressTint="@color/summerMainColor"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -209,14 +218,17 @@
                     android:id="@+id/autumn_progressbar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_percent="0.3"
 
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/autumn_percentage"
+                    app:layout_constraintEnd_toEndOf="@id/autumn_layout"
 
-                    app:layout_constraintWidth_percent="0.7"
-                    android:progressTint="@color/autumnMainColor" />
+                    android:progressDrawable="@drawable/progress"
+                    android:progressTint="@color/autumnMainColor"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -256,14 +268,17 @@
                     android:id="@+id/winter_progressbar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_percent="0.3"
 
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/winter_percentage"
+                    app:layout_constraintEnd_toEndOf="@id/winter_layout"
 
-                    app:layout_constraintWidth_percent="0.7"
-                    android:progressTint="@color/winterMainColor" />
+                    android:progressDrawable="@drawable/progress"
+                    android:progressTint="@color/winterMainColor"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

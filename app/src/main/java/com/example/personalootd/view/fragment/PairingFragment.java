@@ -46,9 +46,8 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     // Picture Fragment에서 넘겨 받는 사진 이미지뷰
     // image path는 mainActivity.imgPath 사용하기!!
     private ImageView imageView;
+    private TextView recommendText;
 
-    // 추천 의류 ID 목록
-    // ... 4개만 추천하는 거 어때?
     private int[] recommendItemNum = new int[4];
 
     // 퍼스널컬러 적합도 분석 결과 퍼센티지
@@ -116,6 +115,8 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         Glide.with(view)
                 .load(mainActivity.imgPath)
                 .into(imageView);
+
+        recommendText = view.findViewById(R.id.recommend_text);
 
         springPercentage = view.findViewById(R.id.spring_percentage);
         summerPercentage = view.findViewById(R.id.summer_percentage);
@@ -216,6 +217,28 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         summerProgressBar.setProgress(percent[1]);
         autumnProgressBar.setProgress(percent[2]);
         winterProgressBar.setProgress(percent[3]);
+
+
+        int max = 0, maxIndex = 0;
+        for (int i = 0; i < percent.length; i++) {
+            if (percent[i] > max) {
+                max = percent[i];
+                maxIndex = i;
+            }
+        }
+        switch(maxIndex) {
+            case 0:
+                recommendText.setText("이 옷은 봄 웜톤에 가장 잘어울립니다.");
+            case 1:
+                recommendText.setText("이 옷은 여름 쿨톤에 가장 잘어울립니다.");
+                break;
+            case 2:
+                recommendText.setText("이 옷은 가을 웜톤에 가장 잘어울립니다.");
+                break;
+            case 3:
+                recommendText.setText("이 옷은 겨울 쿨톤에 가장 잘어울립니다.");
+                break;
+        }
     }
 
     @Override
