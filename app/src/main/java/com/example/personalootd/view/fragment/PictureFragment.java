@@ -59,6 +59,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     public void onDetach() {
         super.onDetach();
         mainActivity =null;
+
     }
 
     @Override

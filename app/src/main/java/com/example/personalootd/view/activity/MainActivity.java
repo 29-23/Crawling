@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.personalootd.R;
 import com.example.personalootd.view.fragment.HomeFragment;
@@ -87,9 +88,11 @@ public class MainActivity extends AppCompatActivity {
     public void goPictureFr(){
         bottomNavigationView.setVisibility(View.VISIBLE);
         if (pairingFragment!=null){
+
+            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction()
-                    .remove(pairingFragment)
-                    .commit();
+                    .replace(R.id.container, pictureFragment)
+                    .commitAllowingStateLoss();
         }
     }
 
@@ -105,9 +108,10 @@ public class MainActivity extends AppCompatActivity {
     public void goHomeFr(){
         bottomNavigationView.setVisibility(View.VISIBLE);
         if (infoFragment!=null){
+            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction()
-                    .remove(infoFragment)
-                    .commit();
+                    .replace(R.id.container, homeFragment)
+                    .commitAllowingStateLoss();
         }
     }
 

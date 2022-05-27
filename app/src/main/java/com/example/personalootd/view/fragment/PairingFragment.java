@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,6 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     //Firebase DB
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    private ValueEventListener valueEventListener;
 
     // 사용자 퍼스널컬러
     private String userColor;
@@ -92,7 +92,6 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -247,10 +246,14 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         mainActivity =null;
-        databaseReference.removeEventListener(valueEventListener);
     }
 }

@@ -68,13 +68,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onDetach() {
         super.onDetach();
         mainActivity =null;
+
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
