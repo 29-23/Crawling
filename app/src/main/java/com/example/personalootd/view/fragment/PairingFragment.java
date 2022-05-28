@@ -53,7 +53,7 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     SharedPreferences preferences;
 
     // response data
-    // Ootd_find data;
+    Ootd_find data;
 
     //백 버튼
     private ImageView backBtn;
@@ -154,29 +154,20 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         // uploadImage
         File file = new File(mainActivity.imgPath);
         RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData("uploadImage", file.getName(), fileBody);
-        Log.d("helloworld", mainActivity.imgPath);
-        Log.d("helloworld", String.valueOf(filePart));
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8000")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Log.d("helloworld", "pairing fragment");
-
-        numList.add("19831");
-        numList.add("19836");
-        numList.add("19847");
-
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-        retrofitAPI.request(user_color, filePart).enqueue(new Callback<Ootd_find>() {
+        retrofitAPI.request(filePart, user_color).enqueue(new Callback<Ootd_find>() {
             @Override
             public void onResponse(Call<Ootd_find> call, Response<Ootd_find> response) {
-                Log.d("helloworld", String.valueOf(response));
                 if (response.isSuccessful()) {
                     Log.d("helloworld", "local POST 성공");
-                    Ootd_find data = response.body();
+                    data = response.body();
                     numList.add(data.getNum()[0]);
                     numList.add(data.getNum()[1]);
                     numList.add(data.getNum()[2]);
@@ -191,18 +182,15 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
                 Log.e("helloworld", String.valueOf(t));
             }
         });
-        initRecyclerView(numList);
+        // initRecyclerView(numList);
     }
 
     private void initRecyclerView(List<String> numList) {
         itemList = new ArrayList<>();
         recommendRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        preferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
-        userColor = preferences.getString("userColor","");
-
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("clothes/top");
+        databaseReference = database.getReference("clothes/bottom");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -241,17 +229,10 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         int [] percent = new int [4];
         String[] text = new String [4];
 
-        // 이 아래 코드에 옷 사진 퍼스널컬러 분석 결과 넣으면 됨
-        percent[0] = 0;
-        percent[1] = 10;
-        percent[2] = 20;
-        percent[3] = 70;
-        /*
         percent[0] = Integer.parseInt(data.getSpring());
         percent[1] = Integer.parseInt(data.getSummer());
         percent[2] = Integer.parseInt(data.getAutumn());
         percent[3] = Integer.parseInt(data.getWinter());
-         */
 
         text[0] = percent[0]+"%";
         text[1] = percent[1]+"%";

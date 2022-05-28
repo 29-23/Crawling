@@ -12,7 +12,7 @@ public interface RetrofitAPI {
     @Multipart
     @POST("/fashion")
     Call<Ootd_find> request(
-            @Part("color") RequestBody user_color,
-            @Part MultipartBody.Part file
+            @Part MultipartBody.Part file,
+            @Part("color") RequestBody user_color
     );
 }
