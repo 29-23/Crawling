@@ -2,9 +2,12 @@ package com.example.personalootd.view.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static java.lang.Thread.sleep;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,14 +33,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 // PicturFragment에서 전달받은 의류와 어울리는 코디 추천하는 곳
 public class PairingFragment extends Fragment implements View.OnClickListener{
 
     MainActivity mainActivity;
     SharedPreferences preferences;
+
+    // response data
+    // Ootd_find data;
 
     //백 버튼
     private ImageView backBtn;
@@ -128,15 +144,53 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstanceState);
         recommendRecyclerView = view.findViewById(R.id.recommend_cloths_recyclerview);
 
-        // 여기 !!!! 이거 !!!!
-        // numList에 불러올 ID 배열 연결하면 됨!!!!
         List<String> numList = new ArrayList<>();
 
-        // 이 세 줄은 테스트 용이니까 꼭 지우기
+        // user_color
+        preferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        String inputText = preferences.getString("userColor","");
+        RequestBody user_color = RequestBody.create(MediaType.parse("text/plain"), inputText);
+
+        // uploadImage
+        File file = new File(mainActivity.imgPath);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("uploadImage", file.getName(), fileBody);
+        Log.d("helloworld", mainActivity.imgPath);
+        Log.d("helloworld", String.valueOf(filePart));
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Log.d("helloworld", "pairing fragment");
+
         numList.add("19831");
         numList.add("19836");
-        numList.add("19856");
+        numList.add("19847");
 
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        retrofitAPI.request(user_color, filePart).enqueue(new Callback<Ootd_find>() {
+            @Override
+            public void onResponse(Call<Ootd_find> call, Response<Ootd_find> response) {
+                Log.d("helloworld", String.valueOf(response));
+                if (response.isSuccessful()) {
+                    Log.d("helloworld", "local POST 성공");
+                    Ootd_find data = response.body();
+                    numList.add(data.getNum()[0]);
+                    numList.add(data.getNum()[1]);
+                    numList.add(data.getNum()[2]);
+                    Log.d("helloworld", data.getNum()[0]);
+                    initRecyclerView(numList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Ootd_find> call, Throwable t) {
+                Log.d("helloworld", "10.0.2.2 실패");
+                Log.e("helloworld", String.valueOf(t));
+            }
+        });
         initRecyclerView(numList);
     }
 
@@ -188,10 +242,16 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
         String[] text = new String [4];
 
         // 이 아래 코드에 옷 사진 퍼스널컬러 분석 결과 넣으면 됨
-        percent[0] = 10;
-        percent[1] = 20;
-        percent[2] = 30;
-        percent[3] = 90;
+        percent[0] = 0;
+        percent[1] = 10;
+        percent[2] = 20;
+        percent[3] = 70;
+        /*
+        percent[0] = Integer.parseInt(data.getSpring());
+        percent[1] = Integer.parseInt(data.getSummer());
+        percent[2] = Integer.parseInt(data.getAutumn());
+        percent[3] = Integer.parseInt(data.getWinter());
+         */
 
         text[0] = percent[0]+"%";
         text[1] = percent[1]+"%";

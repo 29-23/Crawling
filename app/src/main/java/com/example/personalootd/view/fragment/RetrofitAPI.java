@@ -1,21 +1,18 @@
-package com.test.retrofit_test2;
-
-import java.util.HashMap;
+package com.example.personalootd.view.fragment;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface RetrofitAPI {
-    @FormUrlEncoded
-    @POST("/posts")
-    Call<Post> postData(@FieldMap HashMap<String, Object> param);
 
     @Multipart
-    @POST("/get_data")
-    Call<Ootd_find> request(@Part MultipartBody.Part file);
+    @POST("/fashion")
+    Call<Ootd_find> request(
+            @Part("color") RequestBody user_color,
+            @Part MultipartBody.Part file
+    );
 }
