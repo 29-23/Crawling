@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +59,7 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
     public void onDetach() {
         super.onDetach();
         mainActivity =null;
+
     }
 
     @Override
@@ -97,19 +97,6 @@ public class PictureFragment extends Fragment implements View.OnClickListener{
                 initRecyclerGallery();
             }
         });
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("PictureFragment", "onResume");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("PictureFragment", "onPause");
 
     }
 

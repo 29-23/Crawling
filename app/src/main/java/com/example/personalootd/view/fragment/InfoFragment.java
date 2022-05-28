@@ -76,6 +76,8 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mainActivity =(MainActivity)getActivity();
+        Log.d("aa", "Info onAttach");
+
     }
 
     @Override
@@ -237,5 +239,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
         super.onDetach();
         mainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         mainActivity =null;
+        Log.d("aa", "Info onDetach");
+
     }
 }

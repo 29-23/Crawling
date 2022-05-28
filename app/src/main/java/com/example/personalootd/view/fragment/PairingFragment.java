@@ -107,7 +107,6 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -284,6 +283,11 @@ public class PairingFragment extends Fragment implements View.OnClickListener{
             }
 
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override
